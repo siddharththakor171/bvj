@@ -36,27 +36,27 @@
             <tbody>
                 @forelse($inquiries as $inq)
                     <tr>
-                        <td style="font-family: monospace; color: var(--gold-light); font-weight: 600;">
+                        <td style="font-family: monospace; color: var(--gold-primary); font-weight: 700;">
                             {{ $inq->inquiry_number }}
                         </td>
                         <td>
-                            <div style="font-weight: 600; color: #fff;">{{ $inq->customer_name }}</div>
+                            <div style="font-weight: 700; color: #1f1c18;">{{ $inq->customer_name }}</div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $inq->customer_phone }}</div>
                         </td>
                         <td>
-                            <span style="color: var(--gold-light); font-weight: 600;">{{ $inq->interested_category }}</span>
+                            <span style="color: var(--gold-primary); font-weight: 700;">{{ $inq->interested_category }}</span>
                         </td>
                         <td>
-                            <span style="color: #fff; font-weight: 600;">{{ $inq->budget_range ?? 'Not specified' }}</span>
+                            <span style="color: #1f1c18; font-weight: 700;">{{ $inq->budget_range ?? 'Not specified' }}</span>
                         </td>
-                        <td style="font-size: 0.82rem; color: #cbd5e1; max-width: 250px;">
+                        <td style="font-size: 0.82rem; color: #44403c; max-width: 250px; font-style: italic;">
                             "{{ $inq->message }}"
                         </td>
                         <td>
                             <form method="POST" action="{{ route('admin.inquiries.status', $inq->id) }}">
                                 @csrf
                                 @method('PATCH')
-                                <select name="status" onchange="this.form.submit()" class="form-control" style="padding: 0.3rem 0.5rem; font-size: 0.75rem; width: auto; background: rgba(10,12,16,0.9); border-color: var(--border-color);">
+                                <select name="status" onchange="this.form.submit()" class="form-control" style="padding: 0.3rem 0.5rem; font-size: 0.75rem; width: auto; background: #ffffff; color: #1f1c18; border-color: var(--border-color);">
                                     <option value="new" {{ $inq->status === 'new' ? 'selected' : '' }}>New Lead</option>
                                     <option value="contacted" {{ $inq->status === 'contacted' ? 'selected' : '' }}>Contacted</option>
                                     <option value="appointment_booked" {{ $inq->status === 'appointment_booked' ? 'selected' : '' }}>Appointment Booked</option>

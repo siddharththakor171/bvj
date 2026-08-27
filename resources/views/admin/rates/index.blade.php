@@ -16,23 +16,23 @@
         <div class="gold-card">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                 <div>
-                    <h3 style="font-size: 1.1rem; color: #fff;">{{ $rate->metal_name }}</h3>
-                    <span style="font-size: 0.75rem; color: var(--gold-light);">Purity: {{ $rate->purity }}</span>
+                    <h3 style="font-size: 1.1rem; color: #1f1c18;">{{ $rate->metal_name }}</h3>
+                    <span style="font-size: 0.75rem; color: var(--gold-primary); font-weight: 600;">Purity: {{ $rate->purity }}</span>
                 </div>
                 <span class="badge badge-in_stock">Active</span>
             </div>
 
-            <div style="background: rgba(10, 12, 16, 0.7); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; margin-bottom: 1.25rem;">
+            <div style="background: #fbf9f4; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; margin-bottom: 1.25rem;">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
                     <span style="font-size: 0.78rem; color: var(--text-muted);">Rate per {{ $rate->unit }}:</span>
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #fff; font-family: var(--font-heading);">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: #1f1c18; font-family: var(--font-heading);">
                         ₹{{ number_format($rate->rate_per_gram, 2) }}
                     </span>
                 </div>
                 @if($rate->rate_per_10g)
                     <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem;">
                         <span>Rate per 10 Grams / Tola:</span>
-                        <span style="color: var(--gold-light); font-weight: 600;">₹{{ number_format($rate->rate_per_10g, 2) }}</span>
+                        <span style="color: var(--gold-primary); font-weight: 700;">₹{{ number_format($rate->rate_per_10g, 2) }}</span>
                     </div>
                 @endif
             </div>
@@ -76,7 +76,7 @@
             </svg>
         </div>
         <div>
-            <h2 style="font-size: 1.25rem; color: #fff;">Counter Price Estimator & Billing Simulator</h2>
+            <h2 style="font-size: 1.25rem; color: #1f1c18;">Counter Price Estimator & Billing Simulator</h2>
             <p style="font-size: 0.8rem; color: var(--text-muted);">Simulate instant customer quotations with live metal rates, making charges, and statutory 3% GST.</p>
         </div>
     </div>
@@ -111,37 +111,37 @@
         </div>
 
         <!-- Valuation Breakdown Card -->
-        <div style="background: rgba(10, 12, 16, 0.8); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="background: #fbf9f4; border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-                <h4 style="font-size: 0.95rem; color: var(--gold-light); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em;">Quotation Breakdown</h4>
+                <h4 style="font-size: 0.95rem; color: var(--gold-primary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">Quotation Breakdown</h4>
 
                 <div style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.88rem;">
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: var(--text-muted);">Metal Value:</span>
-                        <span id="outMetalVal" style="color: #fff; font-weight: 600;">₹0.00</span>
+                        <span id="outMetalVal" style="color: #1f1c18; font-weight: 700;">₹0.00</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: var(--text-muted);">Making Charges:</span>
-                        <span id="outMakingVal" style="color: #fff; font-weight: 600;">₹0.00</span>
+                        <span id="outMakingVal" style="color: #1f1c18; font-weight: 700;">₹0.00</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: var(--text-muted);">Stone / Diamond Value:</span>
-                        <span id="outStoneVal" style="color: #fff; font-weight: 600;">₹0.00</span>
+                        <span id="outStoneVal" style="color: #1f1c18; font-weight: 700;">₹0.00</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: var(--text-muted);">Hallmarking BIS Fee:</span>
-                        <span style="color: #fff; font-weight: 600;">₹45.00</span>
+                        <span style="color: #1f1c18; font-weight: 700;">₹45.00</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; border-top: 1px dashed var(--border-subtle); padding-top: 0.5rem;">
                         <span style="color: var(--text-muted);">GST (3%):</span>
-                        <span id="outGstVal" style="color: #fff; font-weight: 600;">₹0.00</span>
+                        <span id="outGstVal" style="color: #1f1c18; font-weight: 700;">₹0.00</span>
                     </div>
                 </div>
             </div>
 
             <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                <div style="font-size: 0.75rem; color: var(--gold-light); text-transform: uppercase; letter-spacing: 0.1em;">Estimated Retail Price</div>
-                <div id="outTotalPrice" style="font-size: 2rem; font-weight: 800; color: #fff; font-family: var(--font-heading);">₹0.00</div>
+                <div style="font-size: 0.75rem; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">Estimated Retail Price</div>
+                <div id="outTotalPrice" style="font-size: 2rem; font-weight: 800; color: #1f1c18; font-family: var(--font-heading);">₹0.00</div>
             </div>
         </div>
     </div>

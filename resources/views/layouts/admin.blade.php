@@ -203,9 +203,9 @@
                     </button>
 
                     <div class="dropdown-menu" id="userDropdownMenu">
-                        <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle);">
-                            <div style="font-weight: 700; color: #fff;">{{ Auth::user()->name }}</div>
-                            <div style="font-size: 0.75rem; color: var(--gold-primary);">{{ Auth::user()->email }}</div>
+                        <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); background: #fbf9f4;">
+                            <div style="font-weight: 700; color: #1f1c18;">{{ Auth::user()->name }}</div>
+                            <div style="font-size: 0.75rem; color: var(--gold-primary); font-weight: 600;">{{ Auth::user()->email }}</div>
                         </div>
 
                         <a href="{{ route('admin.password.change') }}" class="dropdown-item">

@@ -59,39 +59,39 @@
             <tbody>
                 @forelse($orders as $o)
                     <tr>
-                        <td style="font-family: monospace; color: var(--gold-light); font-weight: 600;">
+                        <td style="font-family: monospace; color: var(--gold-primary); font-weight: 700;">
                             {{ $o->order_number }}
                         </td>
                         <td>
-                            <div style="font-weight: 600; color: #fff;">{{ $o->customer_name }}</div>
+                            <div style="font-weight: 700; color: #1f1c18;">{{ $o->customer_name }}</div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $o->customer_phone }} ({{ $o->customer_city ?? 'Local' }})</div>
                         </td>
                         <td>
-                            <div style="font-weight: 500; color: var(--gold-light); font-size: 0.82rem;">{{ $o->order_type }}</div>
-                            <div style="font-size: 0.8rem; color: #cbd5e1; max-width: 220px;">{{ $o->items_summary }}</div>
+                            <div style="font-weight: 600; color: var(--gold-primary); font-size: 0.82rem;">{{ $o->order_type }}</div>
+                            <div style="font-size: 0.8rem; color: #44403c; max-width: 220px;">{{ $o->items_summary }}</div>
                         </td>
                         <td>
-                            <span style="font-weight: 600; color: #fff;">{{ $o->total_weight ? number_format($o->total_weight, 3) . 'g' : '-' }}</span>
+                            <span style="font-weight: 700; color: #1f1c18;">{{ $o->total_weight ? number_format($o->total_weight, 3) . 'g' : '-' }}</span>
                         </td>
                         <td>
-                            <div style="font-weight: 700; color: #fff;">₹{{ number_format($o->total_amount, 2) }}</div>
-                            <div style="font-size: 0.75rem; color: var(--color-success);">Adv: ₹{{ number_format($o->advance_paid, 2) }}</div>
+                            <div style="font-weight: 800; color: #1f1c18;">₹{{ number_format($o->total_amount, 2) }}</div>
+                            <div style="font-size: 0.75rem; color: var(--color-success); font-weight: 600;">Adv: ₹{{ number_format($o->advance_paid, 2) }}</div>
                         </td>
                         <td>
                             @if($o->balance_due > 0)
-                                <span style="font-weight: 700; color: #f87171;">₹{{ number_format($o->balance_due, 2) }}</span>
+                                <span style="font-weight: 700; color: #dc2626;">₹{{ number_format($o->balance_due, 2) }}</span>
                             @else
-                                <span style="color: var(--color-success); font-weight: 600;">Paid in Full</span>
+                                <span style="color: var(--color-success); font-weight: 700;">Paid in Full</span>
                             @endif
                         </td>
-                        <td style="font-size: 0.8rem; color: #cbd5e1;">
+                        <td style="font-size: 0.8rem; color: #44403c; font-weight: 500;">
                             {{ $o->delivery_due_date ? $o->delivery_due_date->format('d M Y') : 'Immediate' }}
                         </td>
                         <td>
                             <form method="POST" action="{{ route('admin.orders.status', $o->id) }}" style="display: inline-block;">
                                 @csrf
                                 @method('PATCH')
-                                <select name="status" onchange="this.form.submit()" class="form-control" style="padding: 0.3rem 0.5rem; font-size: 0.75rem; width: auto; background: rgba(10,12,16,0.9); border-color: var(--border-color);">
+                                <select name="status" onchange="this.form.submit()" class="form-control" style="padding: 0.3rem 0.5rem; font-size: 0.75rem; width: auto; background: #ffffff; color: #1f1c18; border-color: var(--border-color);">
                                     <option value="pending" {{ $o->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="in_workshop" {{ $o->status === 'in_workshop' ? 'selected' : '' }}>In Workshop</option>
                                     <option value="hallmarking" {{ $o->status === 'hallmarking' ? 'selected' : '' }}>Hallmarking</option>

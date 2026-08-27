@@ -18,18 +18,39 @@
             justify-content: center;
             padding: 2rem 1rem;
             position: relative;
-            background: radial-gradient(circle at center, #141a26 0%, #080a0e 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, #f4f0e6 100%);
+        }
+
+        .login-page::before {
+            content: '';
+            position: fixed;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .login-page::after {
+            content: '';
+            position: fixed;
+            bottom: -100px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(184, 134, 11, 0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .login-card {
             width: 100%;
             max-width: 440px;
-            background: rgba(18, 23, 33, 0.92);
-            border: 1px solid rgba(223, 183, 108, 0.25);
+            background: #ffffff;
+            border: 1px solid rgba(184, 134, 11, 0.3);
             border-radius: 16px;
             padding: 2.5rem 2.25rem;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(223, 183, 108, 0.1);
-            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(184, 134, 11, 0.12), 0 4px 15px rgba(0, 0, 0, 0.04);
             position: relative;
             z-index: 10;
         }
@@ -40,8 +61,8 @@
             top: 0;
             left: 20%;
             right: 20%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #dfb76c, transparent);
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
         }
 
         .login-brand {
@@ -50,26 +71,27 @@
         }
 
         .brand-emblem {
-            width: 54px;
-            height: 54px;
+            width: 56px;
+            height: 56px;
             margin: 0 auto 1rem;
             background: var(--gold-gradient);
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0b0d11;
+            color: #ffffff;
             font-family: var(--font-heading);
             font-size: 1.6rem;
             font-weight: 800;
-            box-shadow: 0 0 25px rgba(223, 183, 108, 0.4);
+            box-shadow: 0 4px 16px rgba(184, 134, 11, 0.35);
         }
 
         .login-brand h1 {
             font-size: 1.45rem;
-            color: #fff;
-            letter-spacing: 0.1em;
+            color: #1f1c18;
+            letter-spacing: 0.08em;
             margin-bottom: 0.25rem;
+            font-weight: 800;
         }
 
         .login-brand p {
@@ -77,11 +99,12 @@
             color: var(--gold-primary);
             letter-spacing: 0.15em;
             text-transform: uppercase;
+            font-weight: 700;
         }
 
         .demo-credentials-box {
-            background: rgba(223, 183, 108, 0.08);
-            border: 1px dashed rgba(223, 183, 108, 0.35);
+            background: #fdf8ed;
+            border: 1px dashed rgba(184, 134, 11, 0.45);
             border-radius: 8px;
             padding: 0.75rem 1rem;
             margin-bottom: 1.5rem;
@@ -91,29 +114,29 @@
         }
 
         .demo-text {
-            font-size: 0.78rem;
-            color: var(--gold-light);
+            font-size: 0.8rem;
+            color: #57534e;
         }
 
         .demo-text strong {
-            color: #fff;
+            color: var(--gold-dark);
         }
 
         .fill-demo-btn {
-            background: rgba(223, 183, 108, 0.2);
+            background: #ffffff;
             border: 1px solid var(--gold-primary);
-            color: #fff;
-            padding: 0.25rem 0.6rem;
+            color: var(--gold-primary);
+            padding: 0.25rem 0.65rem;
             border-radius: 4px;
             font-size: 0.72rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .fill-demo-btn:hover {
             background: var(--gold-primary);
-            color: #0b0d11;
+            color: #ffffff;
         }
 
         .password-field-wrapper {
@@ -212,7 +235,7 @@
         </div>
 
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-            <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.82rem; cursor: pointer;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; color: #57534e; font-size: 0.82rem; cursor: pointer;">
                 <input type="checkbox" name="remember" checked style="accent-color: var(--gold-primary);">
                 Remember this station
             </label>
@@ -227,7 +250,7 @@
         </button>
     </form>
 
-    <div style="text-align: center; margin-top: 1.75rem; font-size: 0.72rem; color: #64748b; letter-spacing: 0.05em;">
+    <div style="text-align: center; margin-top: 1.75rem; font-size: 0.72rem; color: #78716c; letter-spacing: 0.05em;">
         &copy; {{ date('Y') }} B V JEWELLERS &bull; BIS 100% Hallmarked Jeweller
     </div>
 </div>

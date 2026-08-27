@@ -30,8 +30,8 @@
                 </svg>
             </div>
             <div>
-                <h2 style="font-size: 1.15rem; color: #fff;">Update Master Password</h2>
-                <p style="font-size: 0.78rem; color: var(--text-muted);">Logged in as: <strong style="color: var(--gold-light);">{{ $user->username }}</strong> ({{ $user->email }})</p>
+                <h2 style="font-size: 1.15rem; color: #1f1c18;">Update Master Password</h2>
+                <p style="font-size: 0.78rem; color: var(--text-muted);">Logged in as: <strong style="color: var(--gold-primary);">{{ $user->username }}</strong> ({{ $user->email }})</p>
             </div>
         </div>
 
@@ -98,10 +98,10 @@
                 <!-- Password Strength Visual Meter -->
                 <div style="margin-top: 0.6rem;">
                     <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; margin-bottom: 0.25rem;">
-                        <span style="color: var(--text-muted);">Strength:</span>
-                        <span id="strengthText" style="font-weight: 700; color: #9ca3af;">Too Short</span>
+                        <span style="color: var(--text-muted); font-weight: 600;">Strength:</span>
+                        <span id="strengthText" style="font-weight: 700; color: #78716c;">Too Short</span>
                     </div>
-                    <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 100%; height: 6px; background: #eae5da; border-radius: 4px; overflow: hidden;">
                         <div id="strengthBar" style="width: 0%; height: 100%; transition: width 0.3s, background-color 0.3s;"></div>
                     </div>
                 </div>
@@ -141,17 +141,17 @@
 
     <!-- Security Information & Guidelines Card -->
     <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-        <div class="gold-card" style="border-color: rgba(223, 183, 108, 0.3);">
-            <h3 style="font-size: 1.05rem; color: var(--gold-light); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem;">
+        <div class="gold-card" style="border-color: rgba(184, 134, 11, 0.35);">
+            <h3 style="font-size: 1.05rem; color: var(--gold-primary); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
                 Jeweller Vault Security Guidelines
             </h3>
-            <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 1rem;">
+            <p style="font-size: 0.85rem; color: #44403c; line-height: 1.6; margin-bottom: 1rem;">
                 The B V JEWELLERS administrative portal controls sensitive bullion inventory, live market pricing, and high-value customer order ledgers.
             </p>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.82rem; color: #94a3b8;">
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.82rem; color: #57534e;">
                 <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
                     <span style="color: var(--gold-primary); font-weight: bold;">&#10003;</span>
                     Use at least 8 characters with a blend of letters, numbers, and symbols.
@@ -167,8 +167,8 @@
             </ul>
         </div>
 
-        <div class="gold-card" style="background: rgba(10, 12, 16, 0.7);">
-            <h4 style="font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem;">Need Assistance?</h4>
+        <div class="gold-card" style="background: #fbf9f4;">
+            <h4 style="font-size: 0.9rem; color: #1f1c18; margin-bottom: 0.5rem; font-weight: 700;">Need Assistance?</h4>
             <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
                 If you ever get locked out of your jewellery portal, run `php artisan db:seed` from your server console to reset back to default credentials (`admin`/`admin`).
             </p>
@@ -204,24 +204,24 @@
 
         if (score === 0) {
             text.textContent = 'Too Short';
-            text.style.color = '#9ca3af';
-            bar.style.backgroundColor = '#9ca3af';
+            text.style.color = '#78716c';
+            bar.style.backgroundColor = '#78716c';
         } else if (score <= 25) {
             text.textContent = 'Weak';
-            text.style.color = '#ef4444';
-            bar.style.backgroundColor = '#ef4444';
+            text.style.color = '#dc2626';
+            bar.style.backgroundColor = '#dc2626';
         } else if (score <= 50) {
             text.textContent = 'Fair';
-            text.style.color = '#f59e0b';
-            bar.style.backgroundColor = '#f59e0b';
+            text.style.color = '#d97706';
+            bar.style.backgroundColor = '#d97706';
         } else if (score <= 75) {
             text.textContent = 'Good';
-            text.style.color = '#dfb76c';
-            bar.style.backgroundColor = '#dfb76c';
+            text.style.color = '#996515';
+            bar.style.backgroundColor = '#996515';
         } else {
             text.textContent = 'Strong & Secure';
-            text.style.color = '#10b981';
-            bar.style.backgroundColor = '#10b981';
+            text.style.color = '#059669';
+            bar.style.backgroundColor = '#059669';
         }
     }
 </script>

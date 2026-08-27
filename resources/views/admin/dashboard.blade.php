@@ -31,7 +31,7 @@
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
         <div style="display: flex; align-items: center; gap: 0.5rem;">
             <div class="live-dot"></div>
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold-light); text-transform: uppercase; letter-spacing: 0.1em;">Today's Live Bullion Board</span>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.1em;">Today's Live Bullion Board</span>
         </div>
         <span style="font-size: 0.72rem; color: var(--text-muted);">Updated: {{ date('d M Y') }} &bull; Market Standard</span>
     </div>
@@ -69,9 +69,9 @@
     <div class="gold-card stat-card">
         <div class="stat-info">
             <div class="stat-label">Total Vault Valuation</div>
-            <div class="stat-value">₹{{ number_format($totalInventoryValue / 100000, 2) }} <span style="font-size: 1rem; color: var(--gold-light);">Lakhs</span></div>
+            <div class="stat-value">₹{{ number_format($totalInventoryValue / 100000, 2) }} <span style="font-size: 1rem; color: var(--gold-primary);">Lakhs</span></div>
             <div class="stat-meta">
-                <span style="color: var(--color-success);">&#9650; 8.4%</span> across {{ $totalProducts }} catalog items
+                <span style="color: var(--color-success); font-weight: 600;">&#9650; 8.4%</span> across {{ $totalProducts }} catalog items
             </div>
         </div>
         <div class="stat-icon-wrapper">
@@ -85,7 +85,7 @@
     <div class="gold-card stat-card">
         <div class="stat-info">
             <div class="stat-label">Vault Gold Weight</div>
-            <div class="stat-value">{{ number_format($totalGoldWeight, 1) }} <span style="font-size: 1rem; color: var(--gold-light);">g</span></div>
+            <div class="stat-value">{{ number_format($totalGoldWeight, 1) }} <span style="font-size: 1rem; color: var(--gold-primary);">g</span></div>
             <div class="stat-meta">
                 <span>Silver Vault: {{ number_format($totalSilverWeight, 0) }} g</span>
             </div>
@@ -104,7 +104,7 @@
             <div class="stat-label">Custom Orders In-Workshop</div>
             <div class="stat-value">{{ $activeOrders }}</div>
             <div class="stat-meta">
-                <span style="color: var(--gold-primary);">Karigar Stage: Casting & Polishing</span>
+                <span style="color: var(--gold-primary); font-weight: 600;">Karigar Stage: Casting & Polishing</span>
             </div>
         </div>
         <div class="stat-icon-wrapper">
@@ -122,7 +122,7 @@
             <div class="stat-label">VIP Inquiries & Consultations</div>
             <div class="stat-value">{{ $pendingInquiries }}</div>
             <div class="stat-meta">
-                <span style="color: var(--color-success);">Bridal & Solitaire requests</span>
+                <span style="color: var(--color-success); font-weight: 600;">Bridal & Solitaire requests</span>
             </div>
         </div>
         <div class="stat-icon-wrapper">
@@ -142,67 +142,67 @@
     <div class="gold-card">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
             <div>
-                <h3 style="font-size: 1.1rem; color: #fff;">Monthly Sales & Bullion Turnover</h3>
+                <h3 style="font-size: 1.1rem; color: #1f1c18;">Monthly Sales & Bullion Turnover</h3>
                 <p style="font-size: 0.78rem; color: var(--text-muted);">Gold, Diamond, & Polki volume in INR</p>
             </div>
             <span class="badge badge-in_stock">Growth +14.2%</span>
         </div>
 
-        <!-- Custom Luxury SVG Chart -->
+        <!-- Custom Luxury SVG Chart (Light Mode) -->
         <div style="width: 100%; height: 220px; position: relative; margin-bottom: 1rem;">
             <svg viewBox="0 0 600 200" style="width: 100%; height: 100%; overflow: visible;">
                 <defs>
                     <linearGradient id="goldAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#dfb76c" stop-opacity="0.35"/>
-                        <stop offset="100%" stop-color="#dfb76c" stop-opacity="0.0"/>
+                        <stop offset="0%" stop-color="#d4af37" stop-opacity="0.3"/>
+                        <stop offset="100%" stop-color="#d4af37" stop-opacity="0.0"/>
                     </linearGradient>
                     <linearGradient id="goldLineGrad" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#f5d77f"/>
-                        <stop offset="100%" stop-color="#b88d3b"/>
+                        <stop offset="0%" stop-color="#b8860b"/>
+                        <stop offset="100%" stop-color="#784d09"/>
                     </linearGradient>
                 </defs>
 
                 <!-- Grid lines -->
-                <line x1="0" y1="40" x2="600" y2="40" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-                <line x1="0" y1="90" x2="600" y2="90" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-                <line x1="0" y1="140" x2="600" y2="140" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-                <line x1="0" y1="190" x2="600" y2="190" stroke="rgba(255,255,255,0.1)"/>
+                <line x1="0" y1="40" x2="600" y2="40" stroke="#f0ebd9" stroke-dasharray="4"/>
+                <line x1="0" y1="90" x2="600" y2="90" stroke="#f0ebd9" stroke-dasharray="4"/>
+                <line x1="0" y1="140" x2="600" y2="140" stroke="#f0ebd9" stroke-dasharray="4"/>
+                <line x1="0" y1="190" x2="600" y2="190" stroke="#e6dfcc"/>
 
                 <!-- Area Fill -->
                 <path d="M 0,160 Q 100,120 200,140 T 400,60 T 600,30 L 600,190 L 0,190 Z" fill="url(#goldAreaGrad)"/>
                 
                 <!-- Stroke Line -->
-                <path d="M 0,160 Q 100,120 200,140 T 400,60 T 600,30" fill="none" stroke="url(#goldLineGrad)" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M 0,160 Q 100,120 200,140 T 400,60 T 600,30" fill="none" stroke="url(#goldLineGrad)" stroke-width="3" stroke-linecap="round"/>
 
                 <!-- Data Dots -->
-                <circle cx="0" cy="160" r="4" fill="#dfb76c"/>
-                <circle cx="100" cy="130" r="4" fill="#dfb76c"/>
-                <circle cx="200" cy="140" r="4" fill="#dfb76c"/>
-                <circle cx="300" cy="95" r="4" fill="#dfb76c"/>
-                <circle cx="400" cy="60" r="4" fill="#dfb76c"/>
-                <circle cx="500" cy="45" r="4" fill="#dfb76c"/>
-                <circle cx="600" cy="30" r="5" fill="#fff" stroke="#dfb76c" stroke-width="3"/>
+                <circle cx="0" cy="160" r="4" fill="#b8860b"/>
+                <circle cx="100" cy="130" r="4" fill="#b8860b"/>
+                <circle cx="200" cy="140" r="4" fill="#b8860b"/>
+                <circle cx="300" cy="95" r="4" fill="#b8860b"/>
+                <circle cx="400" cy="60" r="4" fill="#b8860b"/>
+                <circle cx="500" cy="45" r="4" fill="#b8860b"/>
+                <circle cx="600" cy="30" r="5" fill="#ffffff" stroke="#b8860b" stroke-width="3"/>
             </svg>
         </div>
 
-        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.75rem; font-weight: 600;">
             <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep (Peak Bridal)</span>
         </div>
     </div>
 
     <!-- Right Column: Inventory Category Breakdown -->
     <div class="gold-card">
-        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.25rem;">Vault Breakdown</h3>
+        <h3 style="font-size: 1.1rem; color: #1f1c18; margin-bottom: 0.25rem;">Vault Breakdown</h3>
         <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem;">Inventory distribution by department</p>
 
         <div style="display: flex; flex-direction: column; gap: 1rem;">
             @foreach($categoriesBreakdown as $cat)
                 <div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.35rem;">
-                        <span style="color: #e2e8f0; font-weight: 500;">{{ $cat->category }}</span>
-                        <span style="color: var(--gold-light); font-weight: 600;">₹{{ number_format($cat->total_val / 1000, 0) }}k ({{ $cat->count }})</span>
+                        <span style="color: #292524; font-weight: 600;">{{ $cat->category }}</span>
+                        <span style="color: var(--gold-primary); font-weight: 700;">₹{{ number_format($cat->total_val / 1000, 0) }}k ({{ $cat->count }})</span>
                     </div>
-                    <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden;">
+                    <div style="width: 100%; height: 7px; background: #f5f1e6; border-radius: 999px; overflow: hidden;">
                         <div style="width: {{ min(100, ($cat->total_val / ($totalInventoryValue ?: 1)) * 100) }}%; height: 100%; background: var(--gold-gradient); border-radius: 999px;"></div>
                     </div>
                 </div>
@@ -217,7 +217,7 @@
     <div class="gold-card">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
             <div>
-                <h3 style="font-size: 1.1rem; color: #fff;">Recent Customer Orders</h3>
+                <h3 style="font-size: 1.1rem; color: #1f1c18;">Recent Customer Orders</h3>
                 <p style="font-size: 0.78rem; color: var(--text-muted);">Custom bridal commissions and ready stock purchases</p>
             </div>
             <a href="{{ route('admin.orders.index') }}" class="btn-outline-gold btn-sm">View All Orders</a>
@@ -237,13 +237,13 @@
                 <tbody>
                     @forelse($recentOrders as $order)
                         <tr>
-                            <td style="font-family: monospace; color: var(--gold-light); font-weight: 600;">{{ $order->order_number }}</td>
+                            <td style="font-family: monospace; color: var(--gold-primary); font-weight: 700;">{{ $order->order_number }}</td>
                             <td>
-                                <div style="font-weight: 600; color: #fff;">{{ $order->customer_name }}</div>
+                                <div style="font-weight: 700; color: #1f1c18;">{{ $order->customer_name }}</div>
                                 <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $order->customer_phone }}</div>
                             </td>
-                            <td style="font-size: 0.8rem; color: #cbd5e1; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $order->items_summary }}</td>
-                            <td style="font-weight: 700; color: #fff;">₹{{ number_format($order->total_amount, 2) }}</td>
+                            <td style="font-size: 0.8rem; color: #44403c; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $order->items_summary }}</td>
+                            <td style="font-weight: 800; color: #1f1c18;">₹{{ number_format($order->total_amount, 2) }}</td>
                             <td>
                                 <span class="badge badge-{{ $order->status }}">
                                     {{ ucfirst(str_replace('_', ' ', $order->status)) }}
@@ -264,7 +264,7 @@
     <div class="gold-card">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
             <div>
-                <h3 style="font-size: 1.1rem; color: #fff;">VIP Consultations</h3>
+                <h3 style="font-size: 1.1rem; color: #1f1c18;">VIP Consultations</h3>
                 <p style="font-size: 0.78rem; color: var(--text-muted);">High-value bridal & diamond appointment requests</p>
             </div>
             <a href="{{ route('admin.inquiries.index') }}" class="btn-outline-gold btn-sm">Manage</a>
@@ -272,15 +272,15 @@
 
         <div style="display: flex; flex-direction: column; gap: 0.85rem;">
             @forelse($recentInquiries as $inq)
-                <div style="background: rgba(10, 12, 16, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem;">
+                <div style="background: #fbf9f4; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-                        <span style="font-weight: 600; color: #fff; font-size: 0.9rem;">{{ $inq->customer_name }}</span>
+                        <span style="font-weight: 700; color: #1f1c18; font-size: 0.9rem;">{{ $inq->customer_name }}</span>
                         <span class="badge badge-{{ $inq->status }}">{{ ucfirst(str_replace('_', ' ', $inq->status)) }}</span>
                     </div>
-                    <div style="font-size: 0.78rem; color: var(--gold-light); margin-bottom: 0.3rem;">
+                    <div style="font-size: 0.78rem; color: var(--gold-primary); font-weight: 600; margin-bottom: 0.3rem;">
                         Interest: {{ $inq->interested_category }} (Budget: {{ $inq->budget_range ?? 'Unspecified' }})
                     </div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+                    <div style="font-size: 0.78rem; color: #57534e; line-height: 1.4;">
                         "{{ Str::limit($inq->message, 80) }}"
                     </div>
                 </div>
@@ -310,12 +310,12 @@
 
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 @foreach($rates as $r)
-                    <form method="POST" action="{{ route('admin.rates.update', $r->id) }}" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: rgba(10,12,16,0.5); padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <form method="POST" action="{{ route('admin.rates.update', $r->id) }}" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: #fdfbf7; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
                         @csrf
                         @method('PUT')
                         <div style="flex: 1;">
-                            <div style="font-weight: 600; color: #fff; font-size: 0.88rem;">{{ $r->metal_name }}</div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted);">Current: ₹{{ number_format($r->rate_per_gram, 2) }}/{{ $r->unit }}</div>
+                            <div style="font-weight: 700; color: #1f1c18; font-size: 0.88rem;">{{ $r->metal_name }}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">Current: ₹{{ number_format($r->rate_per_gram, 2) }}/{{ $r->unit }}</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <input type="number" step="0.01" name="rate_per_gram" value="{{ $r->rate_per_gram }}" class="form-control" style="width: 120px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" required>

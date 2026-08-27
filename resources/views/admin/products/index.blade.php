@@ -86,7 +86,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.85rem;">
-                                <div style="width: 44px; height: 44px; border-radius: 8px; background: #121722; border: 1px solid var(--border-color); overflow: hidden; flex-shrink: 0;">
+                                <div style="width: 44px; height: 44px; border-radius: 8px; background: #fdfaf2; border: 1px solid var(--border-color); overflow: hidden; flex-shrink: 0;">
                                     @if($p->image_url)
                                         <img src="{{ $p->image_url }}" alt="{{ $p->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
@@ -96,17 +96,17 @@
                                     @endif
                                 </div>
                                 <div>
-                                    <div style="font-weight: 600; color: #fff; font-size: 0.9rem;">{{ $p->name }}</div>
-                                    <div style="font-family: monospace; color: var(--gold-light); font-size: 0.75rem;">{{ $p->sku }}</div>
+                                    <div style="font-weight: 700; color: #1f1c18; font-size: 0.9rem;">{{ $p->name }}</div>
+                                    <div style="font-family: monospace; color: var(--gold-primary); font-size: 0.75rem; font-weight: 600;">{{ $p->sku }}</div>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <div style="font-weight: 500; color: #fff;">{{ $p->category }}</div>
+                            <div style="font-weight: 600; color: #1f1c18;">{{ $p->category }}</div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $p->metal_type }}</div>
                         </td>
                         <td>
-                            <div style="font-weight: 600; color: var(--gold-light); font-size: 0.85rem;">{{ $p->purity }}</div>
+                            <div style="font-weight: 700; color: var(--gold-primary); font-size: 0.85rem;">{{ $p->purity }}</div>
                             @if($p->hallmark_huid)
                                 <div class="hallmark-tag" style="margin-top: 0.2rem;">
                                     <span>BIS</span> {{ $p->hallmark_huid }}
@@ -114,14 +114,14 @@
                             @endif
                         </td>
                         <td>
-                            <div style="font-size: 0.85rem; color: #fff;">Gross: <strong>{{ number_format($p->gross_weight, 3) }}g</strong></div>
+                            <div style="font-size: 0.85rem; color: #1f1c18;">Gross: <strong>{{ number_format($p->gross_weight, 3) }}g</strong></div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);">Net: {{ number_format($p->net_weight, 3) }}g</div>
                         </td>
                         <td>
-                            <span style="color: var(--gold-light); font-weight: 600;">{{ $p->making_charge_percent }}%</span>
+                            <span style="color: var(--gold-primary); font-weight: 700;">{{ $p->making_charge_percent }}%</span>
                         </td>
                         <td>
-                            <div style="font-size: 1rem; font-weight: 700; color: #fff; font-family: var(--font-heading);">
+                            <div style="font-size: 1rem; font-weight: 800; color: #1f1c18; font-family: var(--font-heading);">
                                 ₹{{ number_format($p->calculated_price, 2) }}
                             </div>
                         </td>
