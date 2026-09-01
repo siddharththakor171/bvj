@@ -8,12 +8,17 @@ use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RateController;
+use App\Http\Controllers\Customer\CatalogueController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect root to dashboard (or login)
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
-});
+// Customer Facing Luxury Jewellery Catalogue Routes
+Route::get('/', [CatalogueController::class, 'home'])->name('home');
+Route::get('/catalogue', [CatalogueController::class, 'index'])->name('catalogue.index');
+Route::get('/jewellery/{product:sku}', [CatalogueController::class, 'show'])->name('catalogue.show');
+Route::get('/collections', [CatalogueController::class, 'collections'])->name('collections');
+Route::get('/about', [CatalogueController::class, 'about'])->name('about');
+Route::get('/contact', [CatalogueController::class, 'contact'])->name('contact');
+Route::post('/inquiry', [CatalogueController::class, 'storeInquiry'])->name('catalogue.inquiry');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

@@ -1,7 +1,8 @@
 <?php
 
-test('the application root redirects to dashboard', function () {
+test('the application root renders customer home page', function () {
     $response = $this->get('/');
 
-    $response->assertRedirect(route('admin.dashboard'));
+    $response->assertStatus(200);
+    $response->assertSee('B V JEWELLERS');
 });

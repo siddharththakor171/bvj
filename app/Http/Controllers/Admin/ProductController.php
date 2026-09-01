@@ -7,6 +7,7 @@ use App\Models\JewelryProduct;
 use App\Models\MetalRate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -53,29 +54,36 @@ class ProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'sku' => ['required', 'string', 'max:50', 'unique:jewelry_products,sku'],
-            'category' => ['required', 'string'],
-            'metal_type' => ['required', 'string'],
-            'purity' => ['required', 'string'],
-            'gross_weight' => ['required', 'numeric', 'min:0'],
-            'net_weight' => ['required', 'numeric', 'min:0'],
-            'stone_weight_carat' => ['nullable', 'numeric', 'min:0'],
-            'stone_type' => ['nullable', 'string', 'max:255'],
+            'name'                  => ['required', 'string', 'max:255'],
+            'sku'                   => ['required', 'string', 'max:50', 'unique:jewelry_products,sku'],
+            'category'              => ['required', 'string'],
+            'metal_type'            => ['required', 'string'],
+            'purity'                => ['required', 'string'],
+            'gross_weight'          => ['required', 'numeric', 'min:0'],
+            'net_weight'            => ['required', 'numeric', 'min:0'],
+            'stone_weight_carat'    => ['nullable', 'numeric', 'min:0'],
+            'stone_type'            => ['nullable', 'string', 'max:255'],
             'making_charge_percent' => ['required', 'numeric', 'min:0'],
-            'making_charge_fixed' => ['nullable', 'numeric', 'min:0'],
-            'calculated_price' => ['required', 'numeric', 'min:0'],
-            'stock_quantity' => ['required', 'integer', 'min:0'],
-            'hallmark_huid' => ['nullable', 'string', 'max:50'],
-            'status' => ['required', 'in:in_stock,low_stock,custom_order,sold'],
-            'description' => ['nullable', 'string'],
-            'image_url' => ['nullable', 'url'],
-            'is_featured' => ['boolean'],
+            'making_charge_fixed'   => ['nullable', 'numeric', 'min:0'],
+            'calculated_price'      => ['required', 'numeric', 'min:0'],
+            'stock_quantity'        => ['required', 'integer', 'min:0'],
+            'hallmark_huid'         => ['nullable', 'string', 'max:50'],
+            'status'                => ['required', 'in:in_stock,low_stock,custom_order,sold'],
+            'description'           => ['nullable', 'string'],
+            'product_image'         => ['nullable', 'image', 'mimes:jpeg,png,webp,jpg', 'max:5120'],
+            'is_featured'           => ['boolean'],
         ]);
 
         $validated['stone_weight_carat'] = $validated['stone_weight_carat'] ?? 0;
         $validated['making_charge_fixed'] = $validated['making_charge_fixed'] ?? 0;
         $validated['is_featured'] = $request->has('is_featured');
+
+        // Handle image upload
+        if ($request->hasFile('product_image')) {
+            $path = $request->file('product_image')->store('products', 'public');
+            $validated['image_url'] = Storage::url($path);
+        }
+        unset($validated['product_image']);
 
         JewelryProduct::create($validated);
 
@@ -89,25 +97,38 @@ class ProductController extends Controller
     public function update(Request $request, JewelryProduct $product): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string'],
-            'metal_type' => ['required', 'string'],
-            'purity' => ['required', 'string'],
-            'gross_weight' => ['required', 'numeric', 'min:0'],
-            'net_weight' => ['required', 'numeric', 'min:0'],
-            'stone_weight_carat' => ['nullable', 'numeric', 'min:0'],
-            'stone_type' => ['nullable', 'string', 'max:255'],
+            'name'                  => ['required', 'string', 'max:255'],
+            'category'              => ['required', 'string'],
+            'metal_type'            => ['required', 'string'],
+            'purity'                => ['required', 'string'],
+            'gross_weight'          => ['required', 'numeric', 'min:0'],
+            'net_weight'            => ['required', 'numeric', 'min:0'],
+            'stone_weight_carat'    => ['nullable', 'numeric', 'min:0'],
+            'stone_type'            => ['nullable', 'string', 'max:255'],
             'making_charge_percent' => ['required', 'numeric', 'min:0'],
-            'making_charge_fixed' => ['nullable', 'numeric', 'min:0'],
-            'calculated_price' => ['required', 'numeric', 'min:0'],
-            'stock_quantity' => ['required', 'integer', 'min:0'],
-            'hallmark_huid' => ['nullable', 'string', 'max:50'],
-            'status' => ['required', 'in:in_stock,low_stock,custom_order,sold'],
-            'description' => ['nullable', 'string'],
-            'image_url' => ['nullable', 'url'],
+            'making_charge_fixed'   => ['nullable', 'numeric', 'min:0'],
+            'calculated_price'      => ['required', 'numeric', 'min:0'],
+            'stock_quantity'        => ['required', 'integer', 'min:0'],
+            'hallmark_huid'         => ['nullable', 'string', 'max:50'],
+            'status'                => ['required', 'in:in_stock,low_stock,custom_order,sold'],
+            'description'           => ['nullable', 'string'],
+            'product_image'         => ['nullable', 'image', 'mimes:jpeg,png,webp,jpg', 'max:5120'],
         ]);
 
         $validated['is_featured'] = $request->has('is_featured');
+
+        // Handle image upload — delete old file if it was stored locally
+        if ($request->hasFile('product_image')) {
+            // Delete previous local image if applicable
+            if ($product->image_url && str_starts_with($product->image_url, '/storage/')) {
+                $oldPath = str_replace('/storage/', 'public/', $product->image_url);
+                Storage::delete($oldPath);
+            }
+            $path = $request->file('product_image')->store('products', 'public');
+            $validated['image_url'] = Storage::url($path);
+        }
+        unset($validated['product_image']);
+
         $product->update($validated);
 
         return redirect()->route('admin.products.index')
