@@ -19,7 +19,7 @@ class LiveMetalRateService
     {
         if (! app()->environment('testing')) {
             if (! Cache::has('live-metal-rates-refreshed') && $this->refreshRates()) {
-                Cache::put('live-metal-rates-refreshed', true, now()->addMinutes(5));
+                Cache::put('live-metal-rates-refreshed', true, now()->addMinute());
             }
         }
 

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\JewelryInquiry;
 use App\Models\JewelryProduct;
+use App\Models\StoreSetting;
 use App\Services\LiveMetalRateService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -194,7 +196,7 @@ class CatalogueController extends Controller
      */
     public function about(): View
     {
-        return view('customer.about');
+        return view('customer.about', ['storeSetting' => StoreSetting::firstOrFail()]);
     }
 
     /**
@@ -203,6 +205,21 @@ class CatalogueController extends Controller
     public function contact(): View
     {
         return view('customer.contact');
+    }
+
+    /**
+     * Return current gold and silver rates for live page updates.
+     */
+    public function liveRates(LiveMetalRateService $liveMetalRates): JsonResponse
+    {
+        return response()->json([
+            'rates' => $liveMetalRates->currentRates()->map(fn ($rate): array => [
+                'metal_code' => $rate->metal_code,
+                'rate_per_gram' => (float) $rate->rate_per_gram,
+                'trend' => $rate->trend,
+            ])->values(),
+            'updated_at' => now()->toIso8601String(),
+        ]);
     }
 
     /**

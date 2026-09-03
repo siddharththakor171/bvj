@@ -65,6 +65,14 @@
                 <span class="nav-badge">{{ \App\Models\JewelryProduct::count() }}</span>
             </a>
 
+            <a href="{{ route('admin.contact-messages.index') }}" class="nav-item {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" data-tooltip="Contact Messages">
+                <span class="nav-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <span class="nav-label">Contact Messages</span>
+                <span class="nav-badge">{{ \App\Models\JewelryInquiry::where('status', 'new')->count() }}</span>
+            </a>
+
             <div class="nav-section-title">Security & Settings</div>
 
             <!-- Explicit Change Password Page Link -->

@@ -26,9 +26,9 @@
                     TODAY'S RATES:
                 </span>
                 @foreach($rates as $rate)
-                    <div class="ticker-rate-badge">
+                    <div class="ticker-rate-badge" data-live-rate="{{ $rate->metal_code }}">
                         <span class="metal">{{ $rate->metal_name }}:</span>
-                        <span class="price">₹{{ number_format($rate->rate_per_gram, 2) }}/{{ $rate->unit }}</span>
+                        <span class="price" data-live-rate-value>₹{{ number_format($rate->rate_per_gram, 2) }}/{{ $rate->unit }}</span>
                         @if($rate->trend === 'up')
                             <span class="trend-up">&#9650;</span>
                         @elseif($rate->trend === 'down')
@@ -246,11 +246,11 @@
                     <div class="footer-compliance-box">
                         <div class="footer-compliance-item">
                             <div class="compliance-label">BIS Hallmark Certificate</div>
-                            <div class="compliance-val">HM-IND-2026-928810-BVJ</div>
+                            <div class="compliance-val">{{ $storeSetting->bis_certificate }}</div>
                         </div>
                         <div class="footer-compliance-item">
                             <div class="compliance-label">GSTIN Tax Registration</div>
-                            <div class="compliance-val">27AAAAA0000A1Z5</div>
+                            <div class="compliance-val">{{ $storeSetting->gstin }}</div>
                         </div>
                         <div class="footer-compliance-item">
                             <div class="compliance-label">Assay & Purity Guarantee</div>
@@ -370,5 +370,27 @@
     </script>
 
     @stack('scripts')
+    <script>
+        const refreshLiveRates = async () => {
+            try {
+                const response = await fetch('{{ route('live-rates') }}', {
+                    headers: { 'Accept': 'application/json' },
+                    cache: 'no-store'
+                });
+                if (!response.ok) return;
+
+                const payload = await response.json();
+                payload.rates.forEach((rate) => {
+                    document.querySelectorAll(`[data-live-rate="${rate.metal_code}"] [data-live-rate-value]`).forEach((element) => {
+                        element.textContent = `₹${rate.rate_per_gram.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/gram`;
+                    });
+                });
+            } catch (error) {
+                // Keep the last displayed value when the provider is unavailable.
+            }
+        };
+
+        window.setInterval(refreshLiveRates, 60000);
+    </script>
 </body>
 </html>

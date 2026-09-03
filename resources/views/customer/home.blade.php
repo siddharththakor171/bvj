@@ -28,9 +28,6 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
                     Explore Vault Collection
                 </a>
-                <button type="button" class="btn-gold-outline" style="color: #ffffff; border-color: rgba(212,175,55,0.6);" onclick="openConsultationModal('General Vault Enquiry')">
-                    Book Private Consultation
-                </button>
             </div>
 
             <!-- Trust Metrics -->
@@ -102,12 +99,12 @@
 
         <div class="bullion-grid">
             @foreach($rates as $r)
-                <div class="bullion-item">
+                <div class="bullion-item" data-live-rate="{{ $r->metal_code }}">
                     <div class="bullion-item-header">
                         <span class="bullion-metal-title">{{ $r->metal_name }}</span>
                         <span class="bullion-purity-tag">{{ $r->purity }}</span>
                     </div>
-                    <div class="bullion-item-price">
+                    <div class="bullion-item-price" data-live-rate-value>
                         ₹{{ number_format($r->rate_per_gram, 2) }}
                         <span class="unit">/ {{ $r->unit }}</span>
                     </div>

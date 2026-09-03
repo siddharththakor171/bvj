@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\StoreSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,9 @@ class ProfileController extends Controller
     public function show(): View
     {
         $user = Auth::user();
+        $storeSetting = StoreSetting::firstOrFail();
 
-        return view('admin.profile.show', compact('user'));
+        return view('admin.profile.show', compact('user', 'storeSetting'));
     }
 
     /**
@@ -34,8 +36,26 @@ class ProfileController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
         ]);
 
-        $user->update($validated);
+        $user->update(collect($validated)->only(['name', 'username', 'email', 'phone'])->all());
 
         return back()->with('success', 'Admin profile details updated successfully!');
+    }
+
+    public function updateCertificate(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'establishment' => ['required', 'string', 'max:255'],
+            'tagline' => ['required', 'string', 'max:255'],
+            'bis_certificate' => ['required', 'string', 'max:255'],
+            'bis_note' => ['required', 'string', 'max:255'],
+            'gstin' => ['required', 'string', 'max:255'],
+            'gst_note' => ['required', 'string', 'max:255'],
+        ]);
+
+        StoreSetting::firstOrFail()->update(collect($validated)->only([
+            'establishment', 'tagline', 'bis_certificate', 'bis_note', 'gstin', 'gst_note',
+        ])->all());
+
+        return back()->with('success', 'Jeweller business certificate details updated successfully!');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\ProductController;
@@ -15,6 +16,7 @@ Route::get('/jewellery/{product:sku}', [CatalogueController::class, 'show'])->na
 Route::get('/collections', [CatalogueController::class, 'collections'])->name('collections');
 Route::get('/about', [CatalogueController::class, 'about'])->name('about');
 Route::get('/contact', [CatalogueController::class, 'contact'])->name('contact');
+Route::get('/live-rates', [CatalogueController::class, 'liveRates'])->name('live-rates');
 Route::post('/inquiry', [CatalogueController::class, 'storeInquiry'])->name('catalogue.inquiry');
 
 // Authentication Routes
@@ -37,6 +39,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
+    Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
+    Route::patch('/contact-messages/{inquiry}/status', [ContactMessageController::class, 'updateStatus'])->name('contact-messages.status');
+
     // Change Password Module (Explicit Requirement)
     Route::get('/change-password', [PasswordController::class, 'showChangePasswordForm'])->name('password.change');
     Route::post('/change-password', [PasswordController::class, 'updatePassword'])->name('password.update');
@@ -44,4 +49,5 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // Store & Admin Profile Settings
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/certificate', [ProfileController::class, 'updateCertificate'])->name('profile.certificate.update');
 });

@@ -117,12 +117,12 @@
         <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
             <div style="background: var(--onyx-card); border: 1px solid var(--onyx-border); border-radius: var(--radius-md); padding: 1.25rem 2rem; text-align: left;">
                 <div style="font-size: 0.7rem; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">BIS Hallmark Certificate</div>
-                <div style="font-family: monospace; font-size: 1rem; color: #ffffff; font-weight: 700; margin-top: 0.2rem;">HM-IND-2026-928810-BVJ</div>
+                <div style="font-family: monospace; font-size: 1rem; color: #ffffff; font-weight: 700; margin-top: 0.2rem;">{{ $storeSetting->bis_certificate }}</div>
             </div>
 
             <div style="background: var(--onyx-card); border: 1px solid var(--onyx-border); border-radius: var(--radius-md); padding: 1.25rem 2rem; text-align: left;">
                 <div style="font-size: 0.7rem; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">GSTIN & Tax Registration</div>
-                <div style="font-family: monospace; font-size: 1rem; color: #ffffff; font-weight: 700; margin-top: 0.2rem;">27AAAAA0000A1Z5</div>
+                <div style="font-family: monospace; font-size: 1rem; color: #ffffff; font-weight: 700; margin-top: 0.2rem;">{{ $storeSetting->gstin }}</div>
             </div>
         </div>
     </div>

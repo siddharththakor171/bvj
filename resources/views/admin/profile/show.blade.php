@@ -55,25 +55,35 @@
         <h3 style="font-size: 1.15rem; color: var(--gold-primary); margin-bottom: 0.25rem; font-weight: 700;">Jeweller Business Certificate</h3>
         <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.5rem;">BIS Hallmark and statutory registration</p>
 
-        <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.88rem;">
-            <div style="background: #fbf9f4; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-                <div style="font-size: 0.72rem; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">Establishment</div>
-                <div style="font-size: 1.1rem; font-weight: 800; color: #1f1c18; font-family: var(--font-heading); margin-top: 0.2rem;">B V JEWELLERS</div>
-                <div style="font-size: 0.78rem; color: var(--text-muted);">Crafting Timeless Elegance & Bullion Trust Since 1984</div>
+        <form method="POST" action="{{ route('admin.profile.certificate.update') }}">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label class="form-label">Establishment</label>
+                <input type="text" name="establishment" value="{{ old('establishment', $storeSetting->establishment) }}" class="form-control" required>
             </div>
-
-            <div style="background: #fbf9f4; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-                <div style="font-size: 0.72rem; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">BIS Hallmark Certificate</div>
-                <div style="font-size: 0.95rem; font-weight: 700; color: #1f1c18; font-family: monospace; margin-top: 0.2rem;">HM-IND-2026-928810-BVJ</div>
-                <div style="font-size: 0.75rem; color: var(--color-success); margin-top: 0.2rem; font-weight: 600;">&bull; 100% HUID Laser Verified & Bullion Assay Approved</div>
+            <div class="form-group">
+                <label class="form-label">Tagline</label>
+                <input type="text" name="tagline" value="{{ old('tagline', $storeSetting->tagline) }}" class="form-control" required>
             </div>
-
-            <div style="background: #fbf9f4; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-                <div style="font-size: 0.72rem; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">GSTIN & Tax Registration</div>
-                <div style="font-size: 0.95rem; font-weight: 700; color: #1f1c18; font-family: monospace; margin-top: 0.2rem;">27AAAAA0000A1Z5</div>
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">Jewellery CGST 1.5% + SGST 1.5%</div>
+            <div class="form-group">
+                <label class="form-label">BIS Hallmark Certificate</label>
+                <input type="text" name="bis_certificate" value="{{ old('bis_certificate', $storeSetting->bis_certificate) }}" class="form-control" required>
             </div>
-        </div>
+            <div class="form-group">
+                <label class="form-label">BIS Verification Note</label>
+                <input type="text" name="bis_note" value="{{ old('bis_note', $storeSetting->bis_note) }}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">GSTIN</label>
+                <input type="text" name="gstin" value="{{ old('gstin', $storeSetting->gstin) }}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">GST Note</label>
+                <input type="text" name="gst_note" value="{{ old('gst_note', $storeSetting->gst_note) }}" class="form-control" required>
+            </div>
+            <button type="submit" class="btn-gold">Save Certificate Details</button>
+        </form>
     </div>
 </div>
 
