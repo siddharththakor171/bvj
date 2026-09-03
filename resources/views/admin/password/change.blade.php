@@ -168,7 +168,7 @@
             <!-- Current Password -->
             <div class="form-group">
                 <label class="form-label" for="current_password">Current Password</label>
-                <div class="password-input-wrap">
+                <div class="password-input-wrap" style="position: relative;">
                     <input 
                         type="password" 
                         id="current_password" 
@@ -177,7 +177,7 @@
                         placeholder="Enter your current password"
                         required
                     >
-                    <button type="button" class="password-toggle-btn" onclick="togglePassVisibility('current_password', 'currentEye')">
+                    <button type="button" class="password-toggle-btn" style="position: absolute; top: 50%; right: 0.7rem; transform: translateY(-50%);" aria-label="Show or hide current password" onclick="togglePassVisibility('current_password', 'currentEye')">
                         <svg id="currentEye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
@@ -189,7 +189,7 @@
             <!-- New Password -->
             <div class="form-group">
                 <label class="form-label" for="new_password">New Password</label>
-                <div class="password-input-wrap">
+                <div class="password-input-wrap" style="position: relative;">
                     <input 
                         type="password" 
                         id="new_password" 
@@ -199,7 +199,7 @@
                         oninput="evaluatePasswordStrength(this.value)"
                         required
                     >
-                    <button type="button" class="password-toggle-btn" onclick="togglePassVisibility('new_password', 'newEye')">
+                    <button type="button" class="password-toggle-btn" style="position: absolute; top: 50%; right: 0.7rem; transform: translateY(-50%);" aria-label="Show or hide new password" onclick="togglePassVisibility('new_password', 'newEye')">
                         <svg id="newEye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
@@ -222,7 +222,7 @@
             <!-- Confirm New Password -->
             <div class="form-group">
                 <label class="form-label" for="password_confirmation">Confirm New Password</label>
-                <div class="password-input-wrap">
+                <div class="password-input-wrap" style="position: relative;">
                     <input 
                         type="password" 
                         id="password_confirmation" 
@@ -231,7 +231,7 @@
                         placeholder="Re-enter new password" 
                         required
                     >
-                    <button type="button" class="password-toggle-btn" onclick="togglePassVisibility('password_confirmation', 'confirmEye')">
+                    <button type="button" class="password-toggle-btn" style="position: absolute; top: 50%; right: 0.7rem; transform: translateY(-50%);" aria-label="Show or hide password confirmation" onclick="togglePassVisibility('password_confirmation', 'confirmEye')">
                         <svg id="confirmEye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
