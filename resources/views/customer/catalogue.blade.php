@@ -89,7 +89,6 @@
                         <option value="">All Statuses</option>
                         <option value="in_stock" {{ request('status') === 'in_stock' ? 'selected' : '' }}>In Stock</option>
                         <option value="low_stock" {{ request('status') === 'low_stock' ? 'selected' : '' }}>Low Stock</option>
-                        <option value="custom_order" {{ request('status') === 'custom_order' ? 'selected' : '' }}>Custom Order</option>
                         <option value="sold" {{ request('status') === 'sold' ? 'selected' : '' }}>Sold</option>
                     </select>
                 </div>

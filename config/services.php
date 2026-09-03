@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'live_rates' => [
+        'ca_bundle' => env('LIVE_RATES_CA_BUNDLE'),
+    ],
+
 ];

@@ -162,10 +162,10 @@
 
             <div style="background: var(--bg-surface); border: 1px solid var(--gold-border-light); border-radius: var(--radius-md); padding: 1.5rem;">
                 <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
-                    Can I purchase or place orders online?
+                    Can I buy jewellery online?
                 </h3>
                 <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6;">
-                    BVJ operates as an exclusive physical showroom catalogue. To purchase, verify purity in person, or arrange insured courier pickup, simply connect with our team via Call or WhatsApp.
+                    BVJ is an exclusive physical showroom catalogue. To view a piece, verify purity, or request a current quotation, simply connect with our team via Call or WhatsApp.
                 </p>
             </div>
 

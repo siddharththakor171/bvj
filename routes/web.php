@@ -2,12 +2,9 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\InquiryController;
-use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\RateController;
 use App\Http\Controllers\Customer\CatalogueController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,20 +36,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-
-    // Daily Bullion & Metal Rates
-    Route::get('/rates', [RateController::class, 'index'])->name('rates.index');
-    Route::put('/rates/{rate}', [RateController::class, 'update'])->name('rates.update');
-
-    // Custom Orders & Workshop Tracking
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
-
-    // VIP Customer Inquiries & Leads
-    Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiries.index');
-    Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
-    Route::patch('/inquiries/{inquiry}/status', [InquiryController::class, 'updateStatus'])->name('inquiries.status');
 
     // Change Password Module (Explicit Requirement)
     Route::get('/change-password', [PasswordController::class, 'showChangePasswordForm'])->name('password.change');

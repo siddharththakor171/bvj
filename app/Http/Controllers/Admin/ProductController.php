@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JewelryProduct;
-use App\Models\MetalRate;
+use App\Services\LiveMetalRateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +15,7 @@ class ProductController extends Controller
     /**
      * Display a listing of jewelry items with filters.
      */
-    public function index(Request $request): View
+    public function index(Request $request, LiveMetalRateService $liveMetalRates): View
     {
         $query = JewelryProduct::query();
 
@@ -41,7 +41,7 @@ class ProductController extends Controller
         }
 
         $products = $query->latest()->paginate(10)->withQueryString();
-        $rates = MetalRate::all();
+        $rates = $liveMetalRates->currentRates();
         $categories = ['Necklaces', 'Rings', 'Bangles & Bracelets', 'Earrings', 'Pendants', 'Mangalsutras', 'Coins & Bars', 'Silverware'];
         $metalTypes = ['Gold', 'Diamond', 'Silver', 'Platinum', 'Polki & Kundan'];
 
@@ -54,24 +54,24 @@ class ProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'sku'                   => ['required', 'string', 'max:50', 'unique:jewelry_products,sku'],
-            'category'              => ['required', 'string'],
-            'metal_type'            => ['required', 'string'],
-            'purity'                => ['required', 'string'],
-            'gross_weight'          => ['required', 'numeric', 'min:0'],
-            'net_weight'            => ['required', 'numeric', 'min:0'],
-            'stone_weight_carat'    => ['nullable', 'numeric', 'min:0'],
-            'stone_type'            => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'sku' => ['required', 'string', 'max:50', 'unique:jewelry_products,sku'],
+            'category' => ['required', 'string'],
+            'metal_type' => ['required', 'string'],
+            'purity' => ['required', 'string'],
+            'gross_weight' => ['required', 'numeric', 'min:0'],
+            'net_weight' => ['required', 'numeric', 'min:0'],
+            'stone_weight_carat' => ['nullable', 'numeric', 'min:0'],
+            'stone_type' => ['nullable', 'string', 'max:255'],
             'making_charge_percent' => ['required', 'numeric', 'min:0'],
-            'making_charge_fixed'   => ['nullable', 'numeric', 'min:0'],
-            'calculated_price'      => ['required', 'numeric', 'min:0'],
-            'stock_quantity'        => ['required', 'integer', 'min:0'],
-            'hallmark_huid'         => ['nullable', 'string', 'max:50'],
-            'status'                => ['required', 'in:in_stock,low_stock,custom_order,sold'],
-            'description'           => ['nullable', 'string'],
-            'product_image'         => ['nullable', 'image', 'mimes:jpeg,png,webp,jpg', 'max:5120'],
-            'is_featured'           => ['boolean'],
+            'making_charge_fixed' => ['nullable', 'numeric', 'min:0'],
+            'calculated_price' => ['required', 'numeric', 'min:0'],
+            'stock_quantity' => ['required', 'integer', 'min:0'],
+            'hallmark_huid' => ['nullable', 'string', 'max:50'],
+            'status' => ['required', 'in:in_stock,low_stock,sold'],
+            'description' => ['nullable', 'string'],
+            'product_image' => ['nullable', 'image', 'mimes:jpeg,png,webp,jpg', 'max:5120'],
+            'is_featured' => ['boolean'],
         ]);
 
         $validated['stone_weight_carat'] = $validated['stone_weight_carat'] ?? 0;
@@ -97,22 +97,22 @@ class ProductController extends Controller
     public function update(Request $request, JewelryProduct $product): RedirectResponse
     {
         $validated = $request->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'category'              => ['required', 'string'],
-            'metal_type'            => ['required', 'string'],
-            'purity'                => ['required', 'string'],
-            'gross_weight'          => ['required', 'numeric', 'min:0'],
-            'net_weight'            => ['required', 'numeric', 'min:0'],
-            'stone_weight_carat'    => ['nullable', 'numeric', 'min:0'],
-            'stone_type'            => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string'],
+            'metal_type' => ['required', 'string'],
+            'purity' => ['required', 'string'],
+            'gross_weight' => ['required', 'numeric', 'min:0'],
+            'net_weight' => ['required', 'numeric', 'min:0'],
+            'stone_weight_carat' => ['nullable', 'numeric', 'min:0'],
+            'stone_type' => ['nullable', 'string', 'max:255'],
             'making_charge_percent' => ['required', 'numeric', 'min:0'],
-            'making_charge_fixed'   => ['nullable', 'numeric', 'min:0'],
-            'calculated_price'      => ['required', 'numeric', 'min:0'],
-            'stock_quantity'        => ['required', 'integer', 'min:0'],
-            'hallmark_huid'         => ['nullable', 'string', 'max:50'],
-            'status'                => ['required', 'in:in_stock,low_stock,custom_order,sold'],
-            'description'           => ['nullable', 'string'],
-            'product_image'         => ['nullable', 'image', 'mimes:jpeg,png,webp,jpg', 'max:5120'],
+            'making_charge_fixed' => ['nullable', 'numeric', 'min:0'],
+            'calculated_price' => ['required', 'numeric', 'min:0'],
+            'stock_quantity' => ['required', 'integer', 'min:0'],
+            'hallmark_huid' => ['nullable', 'string', 'max:50'],
+            'status' => ['required', 'in:in_stock,low_stock,sold'],
+            'description' => ['nullable', 'string'],
+            'product_image' => ['nullable', 'image', 'mimes:jpeg,png,webp,jpg', 'max:5120'],
         ]);
 
         $validated['is_featured'] = $request->has('is_featured');

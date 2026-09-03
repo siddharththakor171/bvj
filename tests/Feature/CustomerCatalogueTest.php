@@ -55,6 +55,23 @@ beforeEach(function () {
     );
 });
 
+test('customer home page still renders when the Vite manifest is missing', function () {
+    $manifestPath = public_path('build/manifest.json');
+    $hadManifest = file_exists($manifestPath);
+
+    if ($hadManifest) {
+        rename($manifestPath, $manifestPath.'.bak');
+    }
+
+    try {
+        $this->get('/')->assertStatus(200)->assertSee('B V JEWELLERS');
+    } finally {
+        if ($hadManifest) {
+            rename($manifestPath.'.bak', $manifestPath);
+        }
+    }
+});
+
 test('customer home page renders with branding, live rates and featured vault items', function () {
     $response = $this->get('/');
 

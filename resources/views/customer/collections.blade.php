@@ -49,7 +49,7 @@
         </p>
 
         <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-            <button type="button" class="btn-gold-primary" onclick="openConsultationModal('Custom Atelier Order')">
+            <button type="button" class="btn-gold-primary" onclick="openConsultationModal('Private Design Consultation')">
                 Request Custom Bespoke Design
             </button>
             <a href="https://wa.me/919876543210?text={{ urlencode('Hello B V Jewellers, I would like to discuss a custom bespoke jewellery design.') }}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-large">

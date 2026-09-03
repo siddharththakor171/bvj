@@ -191,7 +191,7 @@
             <div style="background: var(--bg-surface); border: 1px solid var(--gold-border-light); border-radius: var(--radius-md); padding: 1.25rem; font-size: 0.84rem; color: var(--text-secondary);">
                 <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    Showroom Viewing & Custom Orders
+                    Showroom Viewing & Product Enquiries
                 </div>
                 <div>
                     Available for viewing at <strong>B V JEWELLERS Showroom, Zaveri Bazaar, Mumbai</strong>. Custom modifications in metal purity, size, or gemstone settings can be crafted at our atelier.

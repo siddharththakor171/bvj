@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\JewelryInquiry;
-use App\Models\JewelryOrder;
 use App\Models\JewelryProduct;
-use App\Models\MetalRate;
+use App\Services\LiveMetalRateService;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -14,9 +12,9 @@ class DashboardController extends Controller
     /**
      * Display the Executive Jewelry Dashboard.
      */
-    public function index(): View
+    public function index(LiveMetalRateService $liveMetalRates): View
     {
-        $rates = MetalRate::all();
+        $rates = $liveMetalRates->currentRates();
         $rate24k = $rates->firstWhere('metal_code', 'gold_24k');
         $rate22k = $rates->firstWhere('metal_code', 'gold_22k');
         $rateSilver = $rates->firstWhere('metal_code', 'silver_999');
@@ -28,13 +26,6 @@ class DashboardController extends Controller
         $totalGoldWeight = JewelryProduct::where('metal_type', 'like', '%Gold%')->sum('net_weight');
         $totalSilverWeight = JewelryProduct::where('metal_type', 'like', '%Silver%')->sum('net_weight');
 
-        $activeOrders = JewelryOrder::whereIn('status', ['pending', 'in_workshop', 'hallmarking', 'ready_for_pickup'])->count();
-        $totalRevenue = JewelryOrder::where('status', '!=', 'cancelled')->sum('total_amount');
-        $pendingInquiries = JewelryInquiry::whereIn('status', ['new', 'contacted', 'appointment_booked'])->count();
-
-        // Recent Data
-        $recentOrders = JewelryOrder::latest()->take(5)->get();
-        $recentInquiries = JewelryInquiry::latest()->take(4)->get();
         $featuredProducts = JewelryProduct::where('is_featured', true)->take(4)->get();
 
         // Category breakdown
@@ -52,11 +43,6 @@ class DashboardController extends Controller
             'totalInventoryValue',
             'totalGoldWeight',
             'totalSilverWeight',
-            'activeOrders',
-            'totalRevenue',
-            'pendingInquiries',
-            'recentOrders',
-            'recentInquiries',
             'featuredProducts',
             'categoriesBreakdown'
         ));

@@ -9,13 +9,7 @@
         <h1 class="page-title">Jewellery Vault & Executive Dashboard</h1>
         <p class="page-subtitle">Welcome back, {{ Auth::user()->name }}. Real-time bullion metrics and jewellery operations overview.</p>
     </div>
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-        <button type="button" class="btn-outline-gold" onclick="openModal('quickRateModal')">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-            Update Live Rates
-        </button>
+    <div>
         <a href="{{ route('admin.products.index') }}" class="btn-gold">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -98,42 +92,6 @@
         </div>
     </div>
 
-    <!-- Stat 3: Custom Bridal Orders -->
-    <div class="gold-card stat-card">
-        <div class="stat-info">
-            <div class="stat-label">Custom Orders In-Workshop</div>
-            <div class="stat-value">{{ $activeOrders }}</div>
-            <div class="stat-meta">
-                <span style="color: var(--gold-primary); font-weight: 600;">Karigar Stage: Casting & Polishing</span>
-            </div>
-        </div>
-        <div class="stat-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-        </div>
-    </div>
-
-    <!-- Stat 4: VIP Inquiries -->
-    <div class="gold-card stat-card">
-        <div class="stat-info">
-            <div class="stat-label">VIP Inquiries & Consultations</div>
-            <div class="stat-value">{{ $pendingInquiries }}</div>
-            <div class="stat-meta">
-                <span style="color: var(--color-success); font-weight: 600;">Bridal & Solitaire requests</span>
-            </div>
-        </div>
-        <div class="stat-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-        </div>
-    </div>
 </div>
 
 <!-- Main Dashboard Grid (Charts & Tables) -->
@@ -207,126 +165,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
-</div>
-
-<!-- Lower Section: Recent Orders & Inquiries -->
-<div style="display: grid; grid-template-columns: 3fr 2fr; gap: 1.75rem;" class="dashboard-lower-grid">
-    <!-- Recent Custom Orders Table -->
-    <div class="gold-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
-            <div>
-                <h3 style="font-size: 1.1rem; color: #1f1c18;">Recent Customer Orders</h3>
-                <p style="font-size: 0.78rem; color: var(--text-muted);">Custom bridal commissions and ready stock purchases</p>
-            </div>
-            <a href="{{ route('admin.orders.index') }}" class="btn-outline-gold btn-sm">View All Orders</a>
-        </div>
-
-        <div class="table-responsive">
-            <table class="luxury-table">
-                <thead>
-                    <tr>
-                        <th>Order #</th>
-                        <th>Customer</th>
-                        <th>Summary</th>
-                        <th>Total (₹)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($recentOrders as $order)
-                        <tr>
-                            <td style="font-family: monospace; color: var(--gold-primary); font-weight: 700;">{{ $order->order_number }}</td>
-                            <td>
-                                <div style="font-weight: 700; color: #1f1c18;">{{ $order->customer_name }}</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $order->customer_phone }}</div>
-                            </td>
-                            <td style="font-size: 0.8rem; color: #44403c; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $order->items_summary }}</td>
-                            <td style="font-weight: 800; color: #1f1c18;">₹{{ number_format($order->total_amount, 2) }}</td>
-                            <td>
-                                <span class="badge badge-{{ $order->status }}">
-                                    {{ ucfirst(str_replace('_', ' ', $order->status)) }}
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">No orders registered yet.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Recent VIP Consultations & Inquiries -->
-    <div class="gold-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
-            <div>
-                <h3 style="font-size: 1.1rem; color: #1f1c18;">VIP Consultations</h3>
-                <p style="font-size: 0.78rem; color: var(--text-muted);">High-value bridal & diamond appointment requests</p>
-            </div>
-            <a href="{{ route('admin.inquiries.index') }}" class="btn-outline-gold btn-sm">Manage</a>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-            @forelse($recentInquiries as $inq)
-                <div style="background: #fbf9f4; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-                        <span style="font-weight: 700; color: #1f1c18; font-size: 0.9rem;">{{ $inq->customer_name }}</span>
-                        <span class="badge badge-{{ $inq->status }}">{{ ucfirst(str_replace('_', ' ', $inq->status)) }}</span>
-                    </div>
-                    <div style="font-size: 0.78rem; color: var(--gold-primary); font-weight: 600; margin-bottom: 0.3rem;">
-                        Interest: {{ $inq->interested_category }} (Budget: {{ $inq->budget_range ?? 'Unspecified' }})
-                    </div>
-                    <div style="font-size: 0.78rem; color: #57534e; line-height: 1.4;">
-                        "{{ Str::limit($inq->message, 80) }}"
-                    </div>
-                </div>
-            @empty
-                <div style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No active inquiries.</div>
-            @endforelse
-        </div>
-    </div>
-</div>
-
-<!-- Modal: Quick Update Live Bullion Rates -->
-<div class="modal-overlay" id="quickRateModal">
-    <div class="modal-card">
-        <div class="modal-header">
-            <h3 class="modal-title" style="display: flex; align-items: center; gap: 0.5rem;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                </svg>
-                Update Live Bullion Rates
-            </h3>
-            <button type="button" class="modal-close" onclick="closeModal('quickRateModal')">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-                Enter today's opening market rate per gram. 10g rate and pricing multipliers will be updated across all jewellery estimates automatically.
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                @foreach($rates as $r)
-                    <form method="POST" action="{{ route('admin.rates.update', $r->id) }}" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: #fdfbf7; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-                        @csrf
-                        @method('PUT')
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; color: #1f1c18; font-size: 0.88rem;">{{ $r->metal_name }}</div>
-                            <div style="font-size: 0.75rem; color: var(--text-muted);">Current: ₹{{ number_format($r->rate_per_gram, 2) }}/{{ $r->unit }}</div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="number" step="0.01" name="rate_per_gram" value="{{ $r->rate_per_gram }}" class="form-control" style="width: 120px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" required>
-                            <button type="submit" class="btn-gold btn-sm">Update</button>
-                        </div>
-                    </form>
-                @endforeach
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn-outline-gold btn-sm" onclick="closeModal('quickRateModal')">Close</button>
         </div>
     </div>
 </div>

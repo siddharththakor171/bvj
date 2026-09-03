@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\LiveMetalRateService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('layouts.customer', function ($view): void {
+            $view->with('rates', app(LiveMetalRateService::class)->currentRates());
+        });
     }
 }

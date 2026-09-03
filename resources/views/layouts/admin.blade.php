@@ -7,8 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
 </head>
 <body>
 
@@ -61,37 +63,6 @@
                 </span>
                 <span class="nav-label">Vault & Catalog</span>
                 <span class="nav-badge">{{ \App\Models\JewelryProduct::count() }}</span>
-            </a>
-
-            <a href="{{ route('admin.rates.index') }}" class="nav-item {{ request()->routeIs('admin.rates.*') ? 'active' : '' }}" data-tooltip="Bullion & Metal Rates">
-                <span class="nav-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="1" x2="12" y2="23"></line>
-                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                    </svg>
-                </span>
-                <span class="nav-label">Bullion & Live Rates</span>
-            </a>
-
-            <a href="{{ route('admin.orders.index') }}" class="nav-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" data-tooltip="Orders & Custom Making">
-                <span class="nav-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <path d="M16 10a4 4 0 0 1-8 0"></path>
-                    </svg>
-                </span>
-                <span class="nav-label">Custom Orders</span>
-                <span class="nav-badge">{{ \App\Models\JewelryOrder::whereIn('status', ['pending', 'in_workshop'])->count() }}</span>
-            </a>
-
-            <a href="{{ route('admin.inquiries.index') }}" class="nav-item {{ request()->routeIs('admin.inquiries.*') ? 'active' : '' }}" data-tooltip="VIP Inquiries">
-                <span class="nav-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </span>
-                <span class="nav-label">VIP Inquiries</span>
             </a>
 
             <div class="nav-section-title">Security & Settings</div>
@@ -148,7 +119,7 @@
 
                 <!-- Live Bullion Rate Ticker -->
                 @php
-                    $headerRates = \App\Models\MetalRate::all();
+                    $headerRates = app(\App\Services\LiveMetalRateService::class)->currentRates();
                     $gold24 = $headerRates->firstWhere('metal_code', 'gold_24k');
                     $gold22 = $headerRates->firstWhere('metal_code', 'gold_22k');
                     $silver999 = $headerRates->firstWhere('metal_code', 'silver_999');
@@ -182,14 +153,6 @@
 
             <!-- Header Right Section -->
             <div class="header-right">
-                <a href="{{ route('admin.rates.index') }}" class="header-action-btn" title="Daily Rates Board">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 14 14"></polyline>
-                    </svg>
-                    Rates Board
-                </a>
-
                 <!-- User Profile Dropdown -->
                 <div class="header-user-dropdown" id="userDropdownContainer">
                     <button type="button" class="header-user-btn" onclick="toggleUserDropdown()">

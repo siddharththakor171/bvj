@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\JewelryInquiry;
 use App\Models\JewelryProduct;
-use App\Models\MetalRate;
+use App\Services\LiveMetalRateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +16,7 @@ class CatalogueController extends Controller
     /**
      * Display the luxury customer home page.
      */
-    public function home(): View
+    public function home(LiveMetalRateService $liveMetalRates): View
     {
         $featuredProducts = JewelryProduct::where('is_featured', true)
             ->latest()
@@ -30,7 +30,7 @@ class CatalogueController extends Controller
 
         $latestProducts = JewelryProduct::latest()->take(8)->get();
         $heroProduct = $featuredProducts->first() ?? JewelryProduct::first();
-        $rates = MetalRate::all();
+        $rates = $liveMetalRates->currentRates();
 
         // Group categories with product count from Vault database
         $categoryCounts = JewelryProduct::select('category', DB::raw('count(*) as count'))
