@@ -390,7 +390,7 @@
             }
         };
 
-        window.setInterval(refreshLiveRates, 60000);
+        window.setInterval(refreshLiveRates, 1000);
     </script>
 </body>
 </html>
