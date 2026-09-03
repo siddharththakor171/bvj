@@ -3,6 +3,118 @@
 @section('title', 'Change Password')
 
 @section('content')
+<style>
+    .password-page-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+        gap: 1.75rem;
+        max-width: 1080px;
+        align-items: start;
+    }
+
+    .password-form-card {
+        padding: 2rem;
+    }
+
+    .password-card-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .password-card-heading h2 {
+        font-size: 1.15rem;
+        color: #1f1c18;
+    }
+
+    .password-card-heading p {
+        margin-top: 0.2rem;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        overflow-wrap: anywhere;
+    }
+
+    .password-input-wrap {
+        position: relative;
+    }
+
+    .password-input-wrap .form-control {
+        padding-right: 3rem;
+    }
+
+    .password-toggle-btn {
+        position: absolute;
+        top: 50%;
+        right: 0.7rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        transform: translateY(-50%);
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        cursor: pointer;
+    }
+
+    .password-toggle-btn:hover,
+    .password-toggle-btn:focus-visible {
+        color: var(--gold-primary);
+    }
+
+    .password-meter {
+        margin-top: 0.6rem;
+    }
+
+    .password-meter-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.3rem;
+        font-size: 0.72rem;
+    }
+
+    .password-meter-track {
+        width: 100%;
+        height: 6px;
+        overflow: hidden;
+        background: #eae5da;
+        border-radius: 4px;
+    }
+
+    .password-meter-fill {
+        width: 0;
+        height: 100%;
+        transition: width 0.3s, background-color 0.3s;
+    }
+
+    .password-guidelines {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .password-guidelines .gold-card {
+        padding: 1.5rem;
+    }
+
+    @media (max-width: 820px) {
+        .password-page-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .password-form-card,
+        .password-guidelines .gold-card {
+            padding: 1.25rem;
+        }
+    }
+</style>
 <div class="page-header">
     <div>
         <h1 class="page-title">Change Password & Security</h1>
@@ -19,19 +131,19 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem; align-items: start;">
+<div class="password-page-grid">
     <!-- Change Password Form Card -->
-    <div class="gold-card">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
+    <div class="gold-card password-form-card">
+        <div class="password-card-heading">
             <div class="stat-icon-wrapper" style="width: 40px; height: 40px; font-size: 1.1rem;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
             </div>
-            <div>
-                <h2 style="font-size: 1.15rem; color: #1f1c18;">Update Master Password</h2>
-                <p style="font-size: 0.78rem; color: var(--text-muted);">Logged in as: <strong style="color: var(--gold-primary);">{{ $user->username }}</strong> ({{ $user->email }})</p>
+            <div style="min-width: 0;">
+                <h2>Update Master Password</h2>
+                <p>Logged in as: <strong style="color: var(--gold-primary);">{{ $user->username }}</strong> ({{ $user->email }})</p>
             </div>
         </div>
 
@@ -56,13 +168,13 @@
             <!-- Current Password -->
             <div class="form-group">
                 <label class="form-label" for="current_password">Current Password</label>
-                <div style="position: relative;">
+                <div class="password-input-wrap">
                     <input 
                         type="password" 
                         id="current_password" 
                         name="current_password" 
                         class="form-control" 
-                        placeholder="Enter current password (default: admin)"
+                        placeholder="Enter your current password"
                         required
                     >
                     <button type="button" class="password-toggle-btn" onclick="togglePassVisibility('current_password', 'currentEye')">
@@ -77,13 +189,13 @@
             <!-- New Password -->
             <div class="form-group">
                 <label class="form-label" for="new_password">New Password</label>
-                <div style="position: relative;">
+                <div class="password-input-wrap">
                     <input 
                         type="password" 
                         id="new_password" 
                         name="password" 
                         class="form-control" 
-                        placeholder="Enter at least 6 characters" 
+                        placeholder="Enter a new password"
                         oninput="evaluatePasswordStrength(this.value)"
                         required
                     >
@@ -96,13 +208,13 @@
                 </div>
 
                 <!-- Password Strength Visual Meter -->
-                <div style="margin-top: 0.6rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; margin-bottom: 0.25rem;">
+                <div class="password-meter">
+                    <div class="password-meter-label">
                         <span style="color: var(--text-muted); font-weight: 600;">Strength:</span>
                         <span id="strengthText" style="font-weight: 700; color: #78716c;">Too Short</span>
                     </div>
-                    <div style="width: 100%; height: 6px; background: #eae5da; border-radius: 4px; overflow: hidden;">
-                        <div id="strengthBar" style="width: 0%; height: 100%; transition: width 0.3s, background-color 0.3s;"></div>
+                    <div class="password-meter-track">
+                        <div id="strengthBar" class="password-meter-fill"></div>
                     </div>
                 </div>
             </div>
@@ -110,7 +222,7 @@
             <!-- Confirm New Password -->
             <div class="form-group">
                 <label class="form-label" for="password_confirmation">Confirm New Password</label>
-                <div style="position: relative;">
+                <div class="password-input-wrap">
                     <input 
                         type="password" 
                         id="password_confirmation" 
@@ -140,7 +252,7 @@
     </div>
 
     <!-- Security Information & Guidelines Card -->
-    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+    <div class="password-guidelines">
         <div class="gold-card" style="border-color: rgba(184, 134, 11, 0.35);">
             <h3 style="font-size: 1.05rem; color: var(--gold-primary); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -149,7 +261,7 @@
                 Jeweller Vault Security Guidelines
             </h3>
             <p style="font-size: 0.85rem; color: #44403c; line-height: 1.6; margin-bottom: 1rem;">
-                The B V JEWELLERS administrative portal controls sensitive bullion inventory, live market pricing, and high-value customer order ledgers.
+                The B V JEWELLERS administrative portal controls your jewellery catalogue, contact messages, and store information.
             </p>
             <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.82rem; color: #57534e;">
                 <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
