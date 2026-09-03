@@ -1,10 +1,8 @@
-Options -Indexes
-
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
     # Never expose Laravel application files when the repository is in public_html.
-    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|vendor)(?:/|$) - [F,L,NC]
+    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|vendor)(?:/|$) - [F,L,NC]
     RewriteRule ^(?:\.env|\.git|\.claude)(?:/|$) - [F,L,NC]
 
     # Serve Laravel's public assets and front controller from the project root.
@@ -12,4 +10,4 @@ Options -Indexes
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-DirectoryIndex public/index.php
+DirectoryIndex index.php
