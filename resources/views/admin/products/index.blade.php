@@ -182,14 +182,14 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">SKU Code</label>
-                        <input type="text" name="sku" class="form-control" value="BVJ-{{ strtoupper(Str::random(3)) }}-{{ rand(1000,9999) }}" required>
+                        <input type="text" name="sku" class="form-control" value="BVJ-{{ strtoupper(Str::random(3)) }}-{{ rand(1000,9999) }}">
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
                         <label class="form-label">Category</label>
-                        <select name="category" class="form-control" required>
+                        <select name="category" class="form-control">
                             @foreach($categories as $cat)
                                 <option value="{{ $cat }}">{{ $cat }}</option>
                             @endforeach
@@ -197,7 +197,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Metal Type</label>
-                        <select name="metal_type" class="form-control" required>
+                        <select name="metal_type" class="form-control">
                             @foreach($metalTypes as $metal)
                                 <option value="{{ $metal }}">{{ $metal }}</option>
                             @endforeach
@@ -205,33 +205,33 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Purity</label>
-                        <input type="text" name="purity" class="form-control" value="22K (916)" placeholder="e.g. 22K (916) or 18K" required>
+                        <input type="text" name="purity" class="form-control" value="22K (916)" placeholder="e.g. 22K (916) or 18K">
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
                         <label class="form-label">Gross Wt (g)</label>
-                        <input type="number" step="0.001" name="gross_weight" id="addGross" class="form-control" placeholder="0.000" oninput="estimateAddPrice()" required>
+                        <input type="number" step="0.001" name="gross_weight" id="addGross" class="form-control" placeholder="0.000" oninput="estimateAddPrice()">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Net Wt (g)</label>
-                        <input type="number" step="0.001" name="net_weight" id="addNet" class="form-control" placeholder="0.000" oninput="estimateAddPrice()" required>
+                        <input type="number" step="0.001" name="net_weight" id="addNet" class="form-control" placeholder="0.000" oninput="estimateAddPrice()">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Making Charge (%)</label>
-                        <input type="number" step="0.01" name="making_charge_percent" id="addMaking" class="form-control" value="12.50" oninput="estimateAddPrice()" required>
+                        <input type="number" step="0.01" name="making_charge_percent" id="addMaking" class="form-control" value="12.50" oninput="estimateAddPrice()">
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
                         <label class="form-label">Selling Price (₹)</label>
-                        <input type="number" step="0.01" name="calculated_price" id="addPrice" class="form-control" placeholder="Calculated price" required>
+                        <input type="number" step="0.01" name="calculated_price" id="addPrice" class="form-control" placeholder="Calculated price">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Stock Quantity</label>
-                        <input type="number" name="stock_quantity" class="form-control" value="1" min="0" required>
+                        <input type="number" name="stock_quantity" class="form-control" value="1" min="0">
                     </div>
                     <div class="form-group">
                         <label class="form-label">BIS Hallmark HUID</label>
@@ -242,7 +242,7 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
                         <label class="form-label">Status</label>
-                        <select name="status" class="form-control" required>
+                        <select name="status" class="form-control">
                             <option value="in_stock">In Stock</option>
                             <option value="low_stock">Low Stock</option>
                             <option value="sold">Sold</option>
@@ -294,6 +294,26 @@
                 <button type="submit" class="btn-gold">Add to Vault Catalog</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="addCameraModal">
+    <div class="modal-card" style="max-width: 640px;">
+        <div class="modal-header">
+            <h3 class="modal-title">Take Jewellery Photo</h3>
+            <button type="button" class="modal-close" onclick="closeCamera('addCameraModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="addCamPermissionMsg">Allow camera access to take a photo.</p>
+            <div id="addCamLiveWrap" style="display:none;">
+                <video id="addCamVideo" autoplay playsinline style="width:100%;border-radius:8px;background:#111;"></video>
+                <canvas id="addCamCanvas" style="display:none;"></canvas>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-outline-gold" onclick="closeCamera('addCameraModal')">Cancel</button>
+            <button type="button" class="btn-gold" onclick="capturePhoto('addCameraModal', 'addCamVideo', 'addCamCanvas', 'addImageFile', 'addImagePreview', 'addUploadPlaceholder', 'addClearBtn')">Capture Photo</button>
+        </div>
     </div>
 </div>
 
@@ -417,6 +437,26 @@
                 <button type="submit" class="btn-gold">Update Jewellery Item</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="editCameraModal">
+    <div class="modal-card" style="max-width: 640px;">
+        <div class="modal-header">
+            <h3 class="modal-title">Take Jewellery Photo</h3>
+            <button type="button" class="modal-close" onclick="closeCamera('editCameraModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="editCamPermissionMsg">Allow camera access to take a photo.</p>
+            <div id="editCamLiveWrap" style="display:none;">
+                <video id="editCamVideo" autoplay playsinline style="width:100%;border-radius:8px;background:#111;"></video>
+                <canvas id="editCamCanvas" style="display:none;"></canvas>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-outline-gold" onclick="closeCamera('editCameraModal')">Cancel</button>
+            <button type="button" class="btn-gold" onclick="capturePhoto('editCameraModal', 'editCamVideo', 'editCamCanvas', 'editImageFile', 'editImagePreview', 'editUploadPlaceholder', 'editClearBtn')">Capture Photo</button>
+        </div>
     </div>
 </div>
 

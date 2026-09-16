@@ -88,6 +88,20 @@ test('admin can add a new jewellery item', function () {
     ]);
 });
 
+test('admin can add a jewellery item with only a name', function () {
+    $response = $this->actingAs($this->admin)->post('/admin/products', [
+        'name' => 'Minimal Name Only Jewellery Item',
+    ]);
+
+    $response->assertRedirect('/admin/products');
+    $this->assertDatabaseHas('jewelry_products', [
+        'name' => 'Minimal Name Only Jewellery Item',
+        'category' => 'Necklaces',
+        'metal_type' => 'Gold',
+        'status' => 'in_stock',
+    ]);
+});
+
 test('admin can update live bullion rate', function () {
     $response = $this->actingAs($this->admin)->put("/admin/rates/{$this->rate->id}", [
         'rate_per_gram' => 6900.00,
