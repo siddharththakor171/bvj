@@ -23,14 +23,7 @@
         <div>
             <div class="product-gallery-card">
                 <div class="product-gallery-main">
-                    @if($product->image_url)
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" id="mainProductImage">
-                    @else
-                        <div class="jewel-card-fallback-image" style="height: 100%;">
-                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
-                            <span style="font-size: 0.9rem; margin-top: 0.75rem; text-transform: uppercase; font-weight: 700;">{{ $product->category }}</span>
-                        </div>
-                    @endif
+                    <img src="{{ $product->display_image_url }}" alt="{{ $product->name }}" id="mainProductImage">
                 </div>
 
                 <div class="product-badges-row">
@@ -217,13 +210,7 @@
                                 {{ ucfirst(str_replace('_', ' ', $rel->status)) }}
                             </span>
 
-                            @if($rel->image_url)
-                                <img src="{{ $rel->image_url }}" alt="{{ $rel->name }}" class="jewel-card-image" loading="lazy">
-                            @else
-                                <div class="jewel-card-fallback-image">
-                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
-                                </div>
-                            @endif
+                            <img src="{{ $rel->display_image_url }}" alt="{{ $rel->name }}" class="jewel-card-image" loading="lazy">
                         </div>
 
                         <div class="jewel-card-body">

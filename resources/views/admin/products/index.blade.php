@@ -86,13 +86,7 @@
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.85rem;">
                                 <div style="width: 44px; height: 44px; border-radius: 8px; background: #fdfaf2; border: 1px solid var(--border-color); overflow: hidden; flex-shrink: 0;">
-                                    @if($p->image_url)
-                                        <img src="{{ $p->image_url }}" alt="{{ $p->name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                    @else
-                                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--gold-primary);">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
-                                        </div>
-                                    @endif
+                                    <img src="{{ $p->display_image_url }}" alt="{{ $p->name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                                 <div>
                                     <div style="font-weight: 700; color: #1f1c18; font-size: 0.9rem;">{{ $p->name }}</div>

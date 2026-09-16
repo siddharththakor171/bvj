@@ -56,13 +56,7 @@
                         <span>BIS Hallmark Verified</span>
                     </div>
 
-                    @if($heroProduct->image_url)
-                        <img src="{{ $heroProduct->image_url }}" alt="{{ $heroProduct->name }}" class="hero-card-image">
-                    @else
-                        <div class="hero-card-image" style="display: flex; align-items: center; justify-content: center; background: #2a2824; color: var(--gold-bright);">
-                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
-                        </div>
-                    @endif
+                    <img src="{{ $heroProduct->display_image_url }}" alt="{{ $heroProduct->name }}" class="hero-card-image">
 
                     <div class="hero-card-overlay">
                         <div>
@@ -184,14 +178,7 @@
                             {{ ucfirst(str_replace('_', ' ', $item->status)) }}
                         </span>
 
-                        @if($item->image_url)
-                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="jewel-card-image" loading="lazy">
-                        @else
-                            <div class="jewel-card-fallback-image">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
-                                <span style="font-size: 0.72rem; margin-top: 0.5rem; text-transform: uppercase; font-weight: 700;">{{ $item->category }}</span>
-                            </div>
-                        @endif
+                        <img src="{{ $item->display_image_url }}" alt="{{ $item->name }}" class="jewel-card-image" loading="lazy">
                     </div>
 
                     <div class="jewel-card-body">
