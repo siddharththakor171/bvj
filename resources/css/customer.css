@@ -1881,54 +1881,90 @@ textarea {
 
 /* Pagination Styling */
 .pagination-lux {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
     margin-top: 2.5rem;
+}
+
+.pagination-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gold-border-light);
+}
+
+.pagination-summary {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+}
+
+.pagination-summary strong {
+    color: var(--text-primary);
+}
+
+.pagination-controls,
+.pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.pagination-controls {
     flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
-.pagination-lux .page-item {
-    list-style: none;
-}
-
-.pagination-lux .page-link {
+.pagination-page,
+.pagination-arrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 38px;
-    height: 38px;
-    padding: 0 0.65rem;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.7rem;
     border: 1px solid var(--gold-border);
     border-radius: var(--radius-sm);
     background: var(--bg-surface);
     color: var(--text-secondary);
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     font-weight: 600;
     transition: all 0.2s ease;
     text-decoration: none;
 }
 
-.pagination-lux .page-link:hover {
+.pagination-arrow {
+    gap: 0.35rem;
+    color: var(--text-primary);
+}
+
+.pagination-page:hover,
+.pagination-arrow:hover {
     background: var(--gold-primary);
     border-color: var(--gold-primary);
     color: #ffffff;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(153, 101, 21, 0.25);
+    box-shadow: 0 4px 12px rgba(153, 101, 21, 0.2);
 }
 
-.pagination-lux .page-item.active .page-link {
+.pagination-page.is-current {
     background: var(--gold-gradient);
     border-color: var(--gold-primary);
     color: #ffffff;
     box-shadow: 0 4px 14px rgba(153, 101, 21, 0.3);
 }
 
-.pagination-lux .page-item.disabled .page-link {
+.pagination-arrow.is-disabled {
     opacity: 0.4;
     pointer-events: none;
     cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+    min-width: 1rem;
+    color: var(--text-muted);
+    text-align: center;
 }
 
 /* ── Mobile Filter Toggle ───────────────────────────────────── */
@@ -2354,10 +2390,21 @@ textarea {
     }
 
     /* Pagination */
-    .pagination-lux .page-link {
-        min-width: 34px;
-        height: 34px;
-        font-size: 0.78rem;
+    .pagination-nav {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .pagination-summary {
+        text-align: center;
+    }
+
+    .pagination-controls {
+        justify-content: center;
+    }
+
+    .pagination-arrow span {
+        display: none;
     }
 
     /* Float button */

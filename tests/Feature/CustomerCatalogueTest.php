@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\JewelryInquiry;
 use App\Models\JewelryProduct;
 use App\Models\MetalRate;
 use App\Models\User;
@@ -91,6 +90,21 @@ test('customer catalogue page lists products directly from the vault database', 
     $response->assertSee('Royal Heritage Polki Bridal Choker');
     $response->assertSee('BVJ-TEST-CHOKER');
     $response->assertSee('₹475,000.00');
+});
+
+test('customer catalogue pagination preserves active filters and sorting', function () {
+    JewelryProduct::factory()->count(13)->create([
+        'category' => 'Necklaces',
+        'metal_type' => 'Gold',
+    ]);
+
+    $response = $this->get('/catalogue?category=Necklaces&sort=price_desc&page=2');
+
+    $response->assertStatus(200);
+    $response->assertSee('class="pagination-nav"', false);
+    $response->assertSee('aria-current="page"', false);
+    $response->assertSee('category=Necklaces', false);
+    $response->assertSee('sort=price_desc', false);
 });
 
 test('customer catalogue search finds products by name, sku, or hallmark huid', function () {
@@ -214,7 +228,7 @@ test('customer can submit consultation inquiry logged in database', function () 
 });
 
 test('e2e sync: admin adds product in vault -> appears in customer catalogue -> admin updates -> reflects -> admin deletes -> removed', function () {
-    $sku = 'BVJ-SYNC-' . rand(1000, 9999);
+    $sku = 'BVJ-SYNC-'.rand(1000, 9999);
 
     // 1. Admin adds item in "Add Jewellery Item to Vault"
     $addResponse = $this->actingAs($this->admin)->post('/admin/products', [

@@ -239,7 +239,7 @@
 
             <!-- Pagination -->
             <div class="pagination-lux">
-                {{ $products->links() }}
+                {{ $products->links('vendor.pagination.customer') }}
             </div>
         </main>
     </div>
