@@ -6,10 +6,10 @@
 @section('content')
 
 <!-- Header Banner -->
-<div style="background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, rgba(18, 17, 14, 0.98) 100%), var(--onyx-deep); color: #ffffff; padding: 4rem 0; border-bottom: 1px solid var(--onyx-border);">
+<div class="page-banner collections-banner">
     <div class="container-luxury" style="text-align: center;">
         <span class="section-subtitle" style="color: var(--gold-bright);">Atelier Horizons</span>
-        <h1 class="section-title" style="color: #ffffff; font-size: 2.85rem; margin-bottom: 0.75rem;">
+        <h1 class="section-title page-banner-title">
             Curated Jewellery Collections
         </h1>
         <p class="section-desc" style="max-width: 620px; margin: 0 auto; color: #c4bfa5;">
@@ -18,13 +18,13 @@
     </div>
 </div>
 
-<div class="container-luxury" style="padding-top: 4rem; padding-bottom: 6rem;">
-    <div class="category-cards-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+<div class="container-luxury collections-content">
+    <div class="category-cards-grid collections-grid">
         @foreach($categoriesWithCounts as $cat)
             @php
                 $img = $cat->sample_image ?: ($defaultImages[$cat->category] ?? 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80');
             @endphp
-            <a href="{{ route('catalogue.index', ['category' => $cat->category]) }}" class="category-card" style="aspect-ratio: 3/4;">
+            <a href="{{ route('catalogue.index', ['category' => $cat->category]) }}" class="category-card collections-card">
                 <img src="{{ $img }}" alt="{{ $cat->category }}" class="category-card-img" loading="lazy">
                 <div class="category-card-overlay">
                     <span class="category-card-count">
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Custom Atelier Inquiry Callout -->
-    <div style="margin-top: 5rem; background: linear-gradient(135deg, #fbf9f4 0%, #f4ede1 100%); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 3rem; text-align: center;">
+    <div class="collections-callout">
         <span class="section-subtitle">Custom Karigar Atelier</span>
         <h2 class="section-title" style="font-size: 2rem; margin-bottom: 0.75rem;">Looking for a Custom Bespoke Creation?</h2>
         <p class="section-desc" style="max-width: 600px; margin: 0 auto 2rem auto;">

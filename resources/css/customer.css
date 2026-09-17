@@ -112,6 +112,54 @@ textarea {
     padding-right: 1.5rem;
 }
 
+.page-banner {
+    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, rgba(18, 17, 14, 0.98) 100%), var(--onyx-deep);
+    color: #ffffff;
+    border-bottom: 1px solid var(--onyx-border);
+    text-align: center;
+}
+
+.catalogue-banner {
+    padding: 3.5rem 0;
+}
+
+.collections-banner {
+    padding: 4rem 0;
+}
+
+.page-banner-title {
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+}
+
+.catalogue-content {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+}
+
+.collections-content {
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}
+
+.collections-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.collections-card {
+    aspect-ratio: 3 / 4;
+}
+
+.collections-callout {
+    margin-top: 5rem;
+    background: linear-gradient(135deg, #fbf9f4 0%, #f4ede1 100%);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    text-align: center;
+}
+
 /* Top Announcement & Live Rate Ticker */
 .top-ticker-bar {
     background-color: var(--onyx-deep);
@@ -1882,9 +1930,13 @@ textarea {
 /* Pagination Styling */
 .pagination-lux {
     margin-top: 2.5rem;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .pagination-nav {
+    width: 100%;
+    min-width: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1909,6 +1961,9 @@ textarea {
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: 0;
 }
 
 .pagination-controls {
@@ -2251,6 +2306,33 @@ textarea {
         padding-right: 1rem;
     }
 
+    .catalogue-banner,
+    .collections-banner {
+        padding: 2.5rem 0;
+    }
+
+    .page-banner-title {
+        font-size: 1.65rem;
+        line-height: 1.25;
+        margin-bottom: 0.6rem;
+    }
+
+    .catalogue-content,
+    .collections-content {
+        padding-top: 2rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .collections-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.85rem;
+    }
+
+    .collections-callout {
+        margin-top: 2.5rem;
+        padding: 1.5rem 1rem;
+    }
+
     /* Header */
     .navbar-inner {
         height: 64px;
@@ -2393,6 +2475,7 @@ textarea {
     .pagination-nav {
         align-items: stretch;
         flex-direction: column;
+        gap: 0.85rem;
     }
 
     .pagination-summary {
@@ -2401,10 +2484,25 @@ textarea {
 
     .pagination-controls {
         justify-content: center;
+        width: 100%;
+        gap: 0.3rem;
     }
 
     .pagination-arrow span {
         display: none;
+    }
+
+    .pagination-page,
+    .pagination-arrow {
+        min-width: 2rem;
+        height: 2rem;
+        padding: 0 0.5rem;
+        font-size: 0.76rem;
+    }
+
+    .pagination-pages {
+        flex: 1 1 auto;
+        gap: 0.3rem;
     }
 
     /* Float button */

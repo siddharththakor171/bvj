@@ -6,10 +6,10 @@
 @section('content')
 
 <!-- Catalogue Header Banner -->
-<div style="background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, rgba(18, 17, 14, 0.98) 100%), var(--onyx-deep); color: #ffffff; padding: 3.5rem 0; border-bottom: 1px solid var(--onyx-border);">
+<div class="page-banner catalogue-banner">
     <div class="container-luxury" style="text-align: center;">
         <span class="section-subtitle" style="color: var(--gold-bright);">BVJ Master Collection</span>
-        <h1 class="section-title" style="color: #ffffff; font-size: 2.75rem; margin-bottom: 0.5rem;">
+        <h1 class="section-title page-banner-title">
             Jewellery Catalogue & Vault
         </h1>
         <p class="section-desc" style="max-width: 600px; margin: 0 auto; color: #c4bfa5;">
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="container-luxury" style="padding-top: 3rem; padding-bottom: 5rem;">
+<div class="container-luxury catalogue-content">
     <div class="catalogue-layout">
         <!-- Filter Sidebar -->
         <aside class="filter-sidebar">
