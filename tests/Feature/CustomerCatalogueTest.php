@@ -89,7 +89,6 @@ test('customer catalogue page lists products directly from the vault database', 
     $response->assertSee('Jewellery Catalogue & Vault');
     $response->assertSee('Royal Heritage Polki Bridal Choker');
     $response->assertSee('BVJ-TEST-CHOKER');
-    $response->assertSee('₹475,000.00');
 });
 
 test('customer catalogue pagination preserves active filters and sorting', function () {

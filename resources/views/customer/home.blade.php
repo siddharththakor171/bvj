@@ -192,17 +192,10 @@
                         </h3>
 
                         <div class="jewel-specs-snippet">
-                            <span><strong>Purity:</strong> {{ $item->purity }}</span>
-                            <span>&bull;</span>
                             <span><strong>Net:</strong> {{ number_format($item->net_weight, 2) }}g</span>
                         </div>
 
                         <div class="jewel-card-footer">
-                            <div class="jewel-price-block">
-                                <span class="jewel-price-label">Price Est.</span>
-                                <span class="jewel-price-value">₹{{ number_format($item->calculated_price, 2) }}</span>
-                            </div>
-
                             <div class="jewel-card-actions">
                                 <a href="{{ route('catalogue.show', $item->sku) }}" class="btn-card-details">
                                     Details
