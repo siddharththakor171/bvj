@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\JewelryProduct;
 use App\Models\MetalRate;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -59,11 +60,30 @@ test('admin can access dashboard and view bullion metrics', function () {
     $response->assertSee('Gold 22K');
 });
 
+test('admin dashboard renders when inventory has no priced products', function () {
+    JewelryProduct::factory()->create([
+        'category' => 'Imported Products',
+        'calculated_price' => 0,
+    ]);
+
+    $this->actingAs($this->admin)->get('/admin/dashboard')
+        ->assertOk()
+        ->assertSee('Imported Products');
+});
+
 test('admin can view jewellery catalog', function () {
     $response = $this->actingAs($this->admin)->get('/admin/products');
     $response->assertStatus(200);
     $response->assertSee('Vault Inventory');
     $response->assertSee('Jewellery Catalog');
+});
+
+test('admin product category filter loads categories from inventory records', function () {
+    JewelryProduct::factory()->create(['category' => 'Custom Bridal Collection']);
+
+    $this->actingAs($this->admin)->get('/admin/products')
+        ->assertOk()
+        ->assertSee('Custom Bridal Collection');
 });
 
 test('admin can add a new jewellery item', function () {

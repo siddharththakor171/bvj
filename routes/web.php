@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PasswordController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);
 
     Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
     Route::patch('/contact-messages/{inquiry}/status', [ContactMessageController::class, 'updateStatus'])->name('contact-messages.status');

@@ -153,6 +153,7 @@
         <h3 style="font-size: 1.1rem; color: #1f1c18; margin-bottom: 0.25rem;">Vault Breakdown</h3>
         <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem;">Inventory distribution by department</p>
 
+        @php($inventoryValue = (float) $totalInventoryValue)
         <div style="display: flex; flex-direction: column; gap: 1rem;">
             @foreach($categoriesBreakdown as $cat)
                 <div>
@@ -161,7 +162,7 @@
                         <span style="color: var(--gold-primary); font-weight: 700;">₹{{ number_format($cat->total_val / 1000, 0) }}k ({{ $cat->count }})</span>
                     </div>
                     <div style="width: 100%; height: 7px; background: #f5f1e6; border-radius: 999px; overflow: hidden;">
-                        <div style="width: {{ min(100, ($cat->total_val / ($totalInventoryValue ?: 1)) * 100) }}%; height: 100%; background: var(--gold-gradient); border-radius: 999px;"></div>
+                        <div style="width: {{ $inventoryValue > 0 ? min(100, ((float) $cat->total_val / $inventoryValue) * 100) : 0 }}%; height: 100%; background: var(--gold-gradient); border-radius: 999px;"></div>
                     </div>
                 </div>
             @endforeach

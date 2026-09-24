@@ -24,8 +24,8 @@ class JewelryProductFactory extends Factory
         $metalTypes = ['Gold', 'Diamond', 'Silver', 'Platinum', 'Polki & Kundan'];
 
         return [
-            'name' => 'Royal ' . fake()->words(3, true),
-            'sku' => 'BVJ-' . strtoupper(Str::random(3)) . '-' . fake()->unique()->numberBetween(1000, 9999),
+            'name' => 'Royal '.fake()->words(3, true),
+            'sku' => 'BVJ-'.strtoupper(Str::random(3)).'-'.fake()->unique()->numberBetween(1000, 9999),
             'category' => fake()->randomElement($categories),
             'metal_type' => fake()->randomElement($metalTypes),
             'purity' => '22K (916)',
@@ -37,7 +37,7 @@ class JewelryProductFactory extends Factory
             'making_charge_fixed' => 0.00,
             'calculated_price' => fake()->randomFloat(2, 25000, 500000),
             'stock_quantity' => fake()->numberBetween(1, 10),
-            'hallmark_huid' => 'BVJ' . strtoupper(Str::random(5)),
+            'hallmark_huid' => 'BVJ'.strtoupper(Str::random(5)),
             'status' => 'in_stock',
             'description' => fake()->paragraph(),
             'image_url' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80',

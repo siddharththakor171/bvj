@@ -55,7 +55,7 @@
 
             <div class="nav-section-title">Jewellery Management</div>
 
-            <a href="{{ route('admin.products.index') }}" class="nav-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" data-tooltip="Jewellery Catalog">
+              <a href="{{ route('admin.products.index') }}" class="nav-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" data-tooltip="Jewellery Catalog">
                 <span class="nav-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon>
@@ -63,7 +63,14 @@
                 </span>
                 <span class="nav-label">Vault & Catalog</span>
                 <span class="nav-badge">{{ \App\Models\JewelryProduct::count() }}</span>
-            </a>
+              </a>
+
+              <a href="{{ route('admin.categories.index') }}" class="nav-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" data-tooltip="Category Management">
+                  <span class="nav-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 23l-9.59-9.59a2 2 0 0 1 0-2.82L11 .99l9.59 9.6a2 2 0 0 1 0 2.82Z"></path><circle cx="7" cy="7" r="1"></circle></svg>
+                  </span>
+                  <span class="nav-label">Categories</span>
+              </a>
 
             <a href="{{ route('admin.contact-messages.index') }}" class="nav-item {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" data-tooltip="Contact Messages">
                 <span class="nav-icon">

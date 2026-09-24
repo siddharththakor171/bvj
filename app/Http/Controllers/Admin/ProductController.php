@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\JewelryCategory;
 use App\Models\JewelryProduct;
 use App\Services\LiveMetalRateService;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,8 @@ class ProductController extends Controller
      */
     public function index(Request $request, LiveMetalRateService $liveMetalRates): View
     {
+        $this->syncExistingProductCategories();
+
         $query = JewelryProduct::query();
 
         if ($request->filled('search')) {
@@ -43,7 +46,7 @@ class ProductController extends Controller
 
         $products = $query->latest()->paginate(10)->withQueryString();
         $rates = $liveMetalRates->currentRates();
-        $categories = ['Necklaces', 'Rings', 'Bangles & Bracelets', 'Earrings', 'Pendants', 'Mangalsutras', 'Coins & Bars', 'Silverware'];
+        $categories = JewelryCategory::query()->orderBy('name')->pluck('name');
         $metalTypes = ['Gold', 'Diamond', 'Silver', 'Platinum', 'Polki & Kundan'];
 
         return view('admin.products.index', compact('products', 'rates', 'categories', 'metalTypes'));
@@ -57,7 +60,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'sku' => ['nullable', 'string', 'max:50', 'unique:jewelry_products,sku'],
-            'category' => ['nullable', 'string'],
+            'category' => ['required', 'exists:jewelry_categories,name'],
             'metal_type' => ['nullable', 'string'],
             'purity' => ['nullable', 'string'],
             'gross_weight' => ['nullable', 'numeric', 'min:0'],
@@ -80,7 +83,6 @@ class ProductController extends Controller
         } while (JewelryProduct::where('sku', $sku)->exists());
 
         $validated['sku'] = $validated['sku'] ?? $sku;
-        $validated['category'] = $validated['category'] ?? 'Necklaces';
         $validated['metal_type'] = $validated['metal_type'] ?? 'Gold';
         $validated['purity'] = $validated['purity'] ?? '22K (916)';
         $validated['gross_weight'] = $validated['gross_weight'] ?? 0;
@@ -113,7 +115,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string'],
+            'category' => ['required', 'exists:jewelry_categories,name'],
             'metal_type' => ['required', 'string'],
             'purity' => ['required', 'string'],
             'gross_weight' => ['required', 'numeric', 'min:0'],
@@ -160,5 +162,15 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Jewellery item '.$sku.' removed from catalog.');
+    }
+
+    private function syncExistingProductCategories(): void
+    {
+        JewelryProduct::query()
+            ->whereNotNull('category')
+            ->where('category', '!=', '')
+            ->distinct()
+            ->pluck('category')
+            ->each(fn (string $name) => JewelryCategory::firstOrCreate(['name' => $name], ['slug' => Str::slug($name)]));
     }
 }
