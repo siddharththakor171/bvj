@@ -5,19 +5,6 @@
 
 @section('content')
 
-<!-- Header Banner -->
-<div class="page-banner collections-banner">
-    <div class="container-luxury" style="text-align: center;">
-        <span class="section-subtitle" style="color: var(--gold-bright);">Atelier Horizons</span>
-        <h1 class="section-title page-banner-title">
-            Curated Jewellery Collections
-        </h1>
-        <p class="section-desc" style="max-width: 620px; margin: 0 auto; color: #c4bfa5;">
-            Explore our heritage categories crafted in 22K/24K hallmarked gold, certified diamonds, and pure investment bullion.
-        </p>
-    </div>
-</div>
-
 <div class="container-luxury collections-content">
     <div class="category-cards-grid collections-grid">
         @foreach($categoriesWithCounts as $cat)

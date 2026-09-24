@@ -5,19 +5,6 @@
 
 @section('content')
 
-<!-- Catalogue Header Banner -->
-<div class="page-banner catalogue-banner">
-    <div class="container-luxury" style="text-align: center;">
-        <span class="section-subtitle" style="color: var(--gold-bright);">BVJ Master Collection</span>
-        <h1 class="section-title page-banner-title">
-            Jewellery Catalogue & Vault
-        </h1>
-        <p class="section-desc" style="max-width: 600px; margin: 0 auto; color: #c4bfa5;">
-            Browse authentic creations currently in our showroom inventory. Every item is 100% BIS hallmarked and crafted to exacting bullion standards.
-        </p>
-    </div>
-</div>
-
 <div class="container-luxury catalogue-content">
     <div class="catalogue-layout">
         <!-- Filter Sidebar -->
