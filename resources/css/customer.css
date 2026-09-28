@@ -688,8 +688,8 @@ textarea {
 /* Floating Badges */
 .floating-hallmark-badge {
     position: absolute;
-    top: -15px;
-    right: -15px;
+    top: 0.75rem;
+    right: 0.75rem;
     background: var(--gold-gradient);
     color: #ffffff;
     padding: 0.6rem 1rem;
