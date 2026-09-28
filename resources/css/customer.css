@@ -638,8 +638,7 @@ textarea {
 
 .hero-card-image {
     width: 100%;
-    aspect-ratio: 4 / 5;
-    height: auto;
+    height: clamp(340px, 30vw, 430px);
     object-fit: cover;
     object-position: center;
     border-radius: var(--radius-md);
@@ -2360,6 +2359,7 @@ textarea {
     }
     .hero-card-image {
         aspect-ratio: 3 / 4;
+        height: auto;
         min-height: 340px;
     }
     .hero-card-overlay {
