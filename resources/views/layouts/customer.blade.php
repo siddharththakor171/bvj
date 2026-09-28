@@ -17,7 +17,8 @@
 </head>
 <body>
 
-    <!-- Top Bullion Ticker Bar -->
+    {{-- Live rate ticker intentionally removed. --}}
+    {{--
     <div class="top-ticker-bar">
         <div class="container-luxury top-ticker-inner">
             <div class="ticker-rates-wrap">
@@ -48,6 +49,8 @@
             </div>
         </div>
     </div>
+
+    --}}
 
     <!-- Luxury Navigation Header -->
     <header class="luxury-header">
@@ -370,6 +373,7 @@
     </script>
 
     @stack('scripts')
+    {{--
     <script>
         const refreshLiveRates = async () => {
             try {
@@ -392,5 +396,6 @@
 
         window.setInterval(refreshLiveRates, 1000);
     </script>
+    --}}
 </body>
 </html>

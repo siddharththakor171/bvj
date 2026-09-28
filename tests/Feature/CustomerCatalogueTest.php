@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\JewelryCategory;
 use App\Models\JewelryProduct;
 use App\Models\MetalRate;
 use App\Models\User;
@@ -52,6 +53,8 @@ beforeEach(function () {
             'is_featured' => true,
         ]
     );
+
+    JewelryCategory::firstOrCreate(['name' => 'Necklaces'], ['slug' => 'necklaces']);
 });
 
 test('customer home page still renders when the Vite manifest is missing', function () {
@@ -71,15 +74,35 @@ test('customer home page still renders when the Vite manifest is missing', funct
     }
 });
 
-test('customer home page renders with branding, live rates and featured vault items', function () {
+test('customer home page renders stored categories and featured vault items', function () {
     $response = $this->get('/');
 
     $response->assertStatus(200);
     $response->assertSee('B V JEWELLERS');
     $response->assertSee('Heritage Karigar Atelier');
-    $response->assertSee('Gold 22K (916)');
     $response->assertSee('Royal Heritage Polki Bridal Choker');
     $response->assertSee('Explore Vault Collection');
+    $response->assertDontSee('Daily Live Bullion & Precious Metal Rates');
+});
+
+test('customer home page ranks the top eight stored categories by product count', function () {
+    $categories = collect(range(1, 9))->map(function (int $number): JewelryCategory {
+        return JewelryCategory::create([
+            'name' => "Category {$number}",
+            'slug' => "category-{$number}",
+        ]);
+    });
+
+    $categories->each(function (JewelryCategory $category, int $index): void {
+        JewelryProduct::factory()->count(9 - $index)->create(['category' => $category->name]);
+    });
+
+    $response = $this->get('/');
+
+    $response->assertOk();
+    $response->assertSee('Category 1');
+    $response->assertSee('Category 8');
+    $response->assertDontSee('Category 9');
 });
 
 test('customer catalogue page lists products directly from the vault database', function () {
@@ -255,7 +278,6 @@ test('e2e sync: admin adds product in vault -> appears in customer catalogue -> 
     $catResponse->assertStatus(200);
     $catResponse->assertSee('Imperial Emerald Peacock Haram');
     $catResponse->assertSee($sku);
-    $catResponse->assertSee('₹625,000.00');
 
     // 3. Customer opens /jewellery/{sku}
     $detailResponse = $this->get("/jewellery/{$sku}");

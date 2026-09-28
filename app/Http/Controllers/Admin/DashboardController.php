@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JewelryProduct;
-use App\Services\LiveMetalRateService;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -12,14 +11,8 @@ class DashboardController extends Controller
     /**
      * Display the Executive Jewelry Dashboard.
      */
-    public function index(LiveMetalRateService $liveMetalRates): View
+    public function index(): View
     {
-        $rates = $liveMetalRates->currentRates();
-        $rate24k = $rates->firstWhere('metal_code', 'gold_24k');
-        $rate22k = $rates->firstWhere('metal_code', 'gold_22k');
-        $rateSilver = $rates->firstWhere('metal_code', 'silver_999');
-        $rateDiamond = $rates->firstWhere('metal_code', 'diamond_carat');
-
         // Key metrics
         $totalProducts = JewelryProduct::count();
         $totalInventoryValue = JewelryProduct::sum('calculated_price');
@@ -34,11 +27,6 @@ class DashboardController extends Controller
             ->get();
 
         return view('admin.dashboard', compact(
-            'rates',
-            'rate24k',
-            'rate22k',
-            'rateSilver',
-            'rateDiamond',
             'totalProducts',
             'totalInventoryValue',
             'totalGoldWeight',

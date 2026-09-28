@@ -8,18 +8,15 @@
 <div class="container-luxury collections-content">
     <div class="category-cards-grid collections-grid">
         @foreach($categoriesWithCounts as $cat)
-            @php
-                $img = $cat->sample_image ?: ($defaultImages[$cat->category] ?? 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80');
-            @endphp
-            <a href="{{ route('catalogue.index', ['category' => $cat->category]) }}" class="category-card collections-card">
-                <img src="{{ $img }}" alt="{{ $cat->category }}" class="category-card-img" loading="lazy">
+            <a href="{{ route('catalogue.index', ['category' => $cat->name]) }}" class="category-card collections-card">
+                <img src="{{ $cat->latestProduct?->display_image_url }}" alt="{{ $cat->name }}" class="category-card-img" loading="lazy">
                 <div class="category-card-overlay">
                     <span class="category-card-count">
-                        {{ $cat->count }} {{ Str::plural('Piece', $cat->count) }} Currently in Vault
+                        {{ $cat->products_count }} {{ Str::plural('Piece', $cat->products_count) }} Currently in Vault
                     </span>
-                    <h3 class="category-card-name" style="font-size: 1.4rem;">{{ $cat->category }}</h3>
+                    <h3 class="category-card-name" style="font-size: 1.4rem;">{{ $cat->name }}</h3>
                     <span class="category-card-link-text">
-                        Explore {{ $cat->category }}
+                        Explore {{ $cat->name }}
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </span>
                 </div>

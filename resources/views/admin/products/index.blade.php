@@ -206,15 +206,15 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
                         <label class="form-label">Gross Wt (g)</label>
-                        <input type="number" step="0.001" name="gross_weight" id="addGross" class="form-control" placeholder="0.000" oninput="estimateAddPrice()">
+                        <input type="number" step="0.001" name="gross_weight" id="addGross" class="form-control" placeholder="0.000">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Net Wt (g)</label>
-                        <input type="number" step="0.001" name="net_weight" id="addNet" class="form-control" placeholder="0.000" oninput="estimateAddPrice()">
+                        <input type="number" step="0.001" name="net_weight" id="addNet" class="form-control" placeholder="0.000">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Making Charge (%)</label>
-                        <input type="number" step="0.01" name="making_charge_percent" id="addMaking" class="form-control" value="12.50" oninput="estimateAddPrice()">
+                        <input type="number" step="0.01" name="making_charge_percent" id="addMaking" class="form-control" value="12.50">
                     </div>
                 </div>
 
@@ -456,20 +456,6 @@
 
 @push('scripts')
 <script>
-    const live22kRate = {{ optional($rates->firstWhere('metal_code', 'gold_22k'))->rate_per_gram ?? 6855 }};
-
-    function estimateAddPrice() {
-        const net = parseFloat(document.getElementById('addNet').value) || 0;
-        const making = parseFloat(document.getElementById('addMaking').value) || 12.5;
-        if (net > 0) {
-            const metalVal = net * live22kRate;
-            const makingVal = metalVal * (making / 100);
-            const subtotal = metalVal + makingVal;
-            const gst = subtotal * 0.03;
-            document.getElementById('addPrice').value = Math.round(subtotal + gst);
-        }
-    }
-
     function openEditModal(id, product) {
         document.getElementById('editProductForm').action = '/admin/products/' + id;
         document.getElementById('editName').value = product.name;

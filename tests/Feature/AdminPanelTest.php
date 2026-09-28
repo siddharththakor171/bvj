@@ -1,12 +1,12 @@
 <?php
 
+use App\Models\JewelryCategory;
 use App\Models\JewelryProduct;
-use App\Models\MetalRate;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 beforeEach(function () {
-    // Seed default admin and initial rates if not present
+    // Seed the default admin and the category required for product creation.
     $this->admin = User::firstOrCreate(
         ['username' => 'admin'],
         [
@@ -17,17 +17,7 @@ beforeEach(function () {
         ]
     );
 
-    $this->rate = MetalRate::firstOrCreate(
-        ['metal_code' => 'gold_22k'],
-        [
-            'metal_name' => 'Gold 22K (916)',
-            'purity' => '91.6%',
-            'rate_per_gram' => 6855.00,
-            'rate_per_10g' => 68550.00,
-            'unit' => 'gram',
-            'trend' => 'up',
-        ]
-    );
+    JewelryCategory::firstOrCreate(['name' => 'Necklaces'], ['slug' => 'necklaces']);
 });
 
 test('guest is redirected to login from admin dashboard', function () {
@@ -52,12 +42,12 @@ test('admin can authenticate with default credentials admin/admin', function () 
     $this->assertAuthenticatedAs($this->admin);
 });
 
-test('admin can access dashboard and view bullion metrics', function () {
+test('admin can access dashboard without live rate metrics', function () {
     $response = $this->actingAs($this->admin)->get('/admin/dashboard');
     $response->assertStatus(200);
     $response->assertSee('B V JEWELLERS');
     $response->assertSee('Total Vault Valuation');
-    $response->assertSee('Gold 22K');
+    $response->assertDontSee("Today's Live Bullion Board");
 });
 
 test('admin dashboard renders when inventory has no priced products', function () {
@@ -78,7 +68,8 @@ test('admin can view jewellery catalog', function () {
     $response->assertSee('Jewellery Catalog');
 });
 
-test('admin product category filter loads categories from inventory records', function () {
+test('admin product category filter loads stored categories', function () {
+    JewelryCategory::create(['name' => 'Custom Bridal Collection', 'slug' => 'custom-bridal-collection']);
     JewelryProduct::factory()->create(['category' => 'Custom Bridal Collection']);
 
     $this->actingAs($this->admin)->get('/admin/products')
@@ -108,28 +99,15 @@ test('admin can add a new jewellery item', function () {
     ]);
 });
 
-test('admin can add a jewellery item with only a name', function () {
+test('admin requires a stored category to add a jewellery item', function () {
     $response = $this->actingAs($this->admin)->post('/admin/products', [
         'name' => 'Minimal Name Only Jewellery Item',
     ]);
 
-    $response->assertRedirect('/admin/products');
-    $this->assertDatabaseHas('jewelry_products', [
+    $response->assertSessionHasErrors('category');
+    $this->assertDatabaseMissing('jewelry_products', [
         'name' => 'Minimal Name Only Jewellery Item',
-        'category' => 'Necklaces',
-        'metal_type' => 'Gold',
-        'status' => 'in_stock',
     ]);
-});
-
-test('admin can update live bullion rate', function () {
-    $response = $this->actingAs($this->admin)->put("/admin/rates/{$this->rate->id}", [
-        'rate_per_gram' => 6900.00,
-    ]);
-
-    $response->assertRedirect();
-    $this->rate->refresh();
-    expect((float) $this->rate->rate_per_gram)->toEqual(6900.00);
 });
 
 test('admin can view change password page', function () {

@@ -622,6 +622,8 @@ textarea {
 /* Hero Showcase Card */
 .hero-showcase-wrap {
     position: relative;
+    width: min(100%, 480px);
+    justify-self: end;
 }
 
 .hero-main-card {
@@ -636,8 +638,10 @@ textarea {
 
 .hero-card-image {
     width: 100%;
-    height: 380px;
+    aspect-ratio: 4 / 5;
+    height: auto;
     object-fit: cover;
+    object-position: center;
     border-radius: var(--radius-md);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -2229,6 +2233,7 @@ textarea {
     .hero-showcase-wrap {
         max-width: 480px;
         margin: 0 auto;
+        justify-self: center;
     }
 
     /* Top Ticker */
@@ -2349,6 +2354,32 @@ textarea {
     /* Hero */
     .hero-luxury {
         padding: 2.5rem 0;
+    }
+    .hero-main-card {
+        padding: 0.75rem;
+    }
+    .hero-card-image {
+        aspect-ratio: 3 / 4;
+        min-height: 340px;
+    }
+    .hero-card-overlay {
+        bottom: 1.1rem;
+        left: 1.1rem;
+        right: 1.1rem;
+        gap: 0.75rem;
+        padding: 0.8rem;
+    }
+    .hero-card-name {
+        font-size: 0.88rem;
+    }
+    .hero-card-price {
+        font-size: 1rem;
+    }
+    .floating-hallmark-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.65rem;
     }
     .hero-title {
         font-size: 1.85rem;

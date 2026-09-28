@@ -10,8 +10,8 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: minmax(280px, .8fr) minmax(0, 1.6fr); gap: 1.5rem; align-items: start;">
-    <section class="gold-card" style="padding: 1.25rem;">
+<div style="display: grid; gap: 1.5rem;">
+    <section class="gold-card" style="max-width: 760px; padding: 1.25rem;">
         <h2 style="margin: 0 0 1rem; font-size: 1.15rem;">Create Category</h2>
         <form method="POST" action="{{ route('admin.categories.store') }}">
             @csrf
@@ -29,6 +29,9 @@
     </section>
 
     <section class="gold-card">
+        <div style="padding: 1.25rem 1.25rem 0;">
+            <h2 style="margin: 0; font-size: 1.15rem;">Existing Categories</h2>
+        </div>
         <div class="table-responsive">
             <table class="luxury-table">
                 <thead><tr><th>Category</th><th>Products</th><th>Description</th><th style="text-align: right;">Actions</th></tr></thead>

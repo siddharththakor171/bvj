@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\JewelryCategory;
 use App\Models\JewelryInquiry;
 use App\Models\JewelryProduct;
 use App\Models\StoreSetting;
-use App\Services\LiveMetalRateService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class CatalogueController extends Controller
@@ -18,7 +16,7 @@ class CatalogueController extends Controller
     /**
      * Display the luxury customer home page.
      */
-    public function home(LiveMetalRateService $liveMetalRates): View
+    public function home(): View
     {
         $featuredProducts = JewelryProduct::where('is_featured', true)
             ->latest()
@@ -30,34 +28,21 @@ class CatalogueController extends Controller
             $featuredProducts = JewelryProduct::latest()->take(6)->get();
         }
 
-        $latestProducts = JewelryProduct::latest()->take(8)->get();
         $heroProduct = $featuredProducts->first() ?? JewelryProduct::first();
-        $rates = $liveMetalRates->currentRates();
 
-        // Group categories with product count from Vault database
-        $categoryCounts = JewelryProduct::select('category', DB::raw('count(*) as count'))
-            ->groupBy('category')
-            ->pluck('count', 'category')
-            ->toArray();
-
-        $defaultCategories = [
-            'Necklaces' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80',
-            'Rings' => 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&auto=format&fit=crop&q=80',
-            'Bangles & Bracelets' => 'https://images.unsplash.com/photo-1611591475836-9e19bbd2a762?w=600&auto=format&fit=crop&q=80',
-            'Earrings' => 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600&auto=format&fit=crop&q=80',
-            'Mangalsutras' => 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80',
-            'Coins & Bars' => 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&auto=format&fit=crop&q=80',
-            'Silverware' => 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80',
-            'Pendants' => 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=600&auto=format&fit=crop&q=80',
-        ];
+        $topCategories = JewelryCategory::query()
+            ->withCount('products')
+            ->with('latestProduct')
+            ->has('products')
+            ->orderByDesc('products_count')
+            ->orderBy('name')
+            ->limit(8)
+            ->get();
 
         return view('customer.home', compact(
             'featuredProducts',
-            'latestProducts',
             'heroProduct',
-            'rates',
-            'categoryCounts',
-            'defaultCategories'
+            'topCategories'
         ));
     }
 
@@ -134,17 +119,8 @@ class CatalogueController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
 
-        // Get distinct categories and metal types present in the Vault
-        $categories = JewelryProduct::distinct()->pluck('category')->filter()->values()->toArray();
-        if (empty($categories)) {
-            $categories = ['Necklaces', 'Rings', 'Bangles & Bracelets', 'Earrings', 'Pendants', 'Mangalsutras', 'Coins & Bars', 'Silverware'];
-        }
-
+        $categories = JewelryCategory::query()->orderBy('name')->pluck('name')->all();
         $metalTypes = JewelryProduct::distinct()->pluck('metal_type')->filter()->values()->toArray();
-        if (empty($metalTypes)) {
-            $metalTypes = ['Gold', 'Diamond', 'Silver', 'Platinum', 'Polki & Kundan'];
-        }
-
         $purities = JewelryProduct::distinct()->pluck('purity')->filter()->values()->toArray();
 
         return view('customer.catalogue', compact('products', 'categories', 'metalTypes', 'purities'));
@@ -173,22 +149,15 @@ class CatalogueController extends Controller
      */
     public function collections(): View
     {
-        $categoriesWithCounts = JewelryProduct::select('category', DB::raw('count(*) as count'), DB::raw('MAX(image_url) as sample_image'))
-            ->groupBy('category')
+        $categoriesWithCounts = JewelryCategory::query()
+            ->withCount('products')
+            ->with('latestProduct')
+            ->has('products')
+            ->orderByDesc('products_count')
+            ->orderBy('name')
             ->get();
 
-        $defaultImages = [
-            'Necklaces' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80',
-            'Rings' => 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&auto=format&fit=crop&q=80',
-            'Bangles & Bracelets' => 'https://images.unsplash.com/photo-1611591475836-9e19bbd2a762?w=600&auto=format&fit=crop&q=80',
-            'Earrings' => 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600&auto=format&fit=crop&q=80',
-            'Mangalsutras' => 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80',
-            'Coins & Bars' => 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&auto=format&fit=crop&q=80',
-            'Silverware' => 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80',
-            'Pendants' => 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=600&auto=format&fit=crop&q=80',
-        ];
-
-        return view('customer.collections', compact('categoriesWithCounts', 'defaultImages'));
+        return view('customer.collections', compact('categoriesWithCounts'));
     }
 
     /**
@@ -205,21 +174,6 @@ class CatalogueController extends Controller
     public function contact(): View
     {
         return view('customer.contact');
-    }
-
-    /**
-     * Return current gold and silver rates for live page updates.
-     */
-    public function liveRates(LiveMetalRateService $liveMetalRates): JsonResponse
-    {
-        return response()->json([
-            'rates' => $liveMetalRates->currentRates()->map(fn ($rate): array => [
-                'metal_code' => $rate->metal_code,
-                'rate_per_gram' => (float) $rate->rate_per_gram,
-                'trend' => $rate->trend,
-            ])->values(),
-            'updated_at' => now()->toIso8601String(),
-        ]);
     }
 
     /**

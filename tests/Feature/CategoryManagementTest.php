@@ -1,16 +1,15 @@
 <?php
 
 use App\Models\JewelryCategory;
-use App\Models\JewelryProduct;
 use App\Models\User;
 
 test('category management lists existing product categories and creates a new category', function () {
     $admin = User::factory()->create(['username' => 'category-admin']);
-    JewelryProduct::factory()->create(['category' => 'Traditional Jewellery']);
+    JewelryCategory::factory()->create(['name' => 'Traditional Jewellery', 'slug' => 'traditional-jewellery']);
 
     $this->actingAs($admin)->get(route('admin.categories.index'))
         ->assertOk()
-        ->assertSee('Traditional Jewellery');
+        ->assertSeeInOrder(['Create Category', 'Existing Categories', 'Traditional Jewellery']);
 
     $this->actingAs($admin)->post(route('admin.categories.store'), [
         'name' => 'Bridal Collections',

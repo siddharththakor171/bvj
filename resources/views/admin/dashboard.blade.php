@@ -7,7 +7,7 @@
 <div class="page-header">
     <div>
         <h1 class="page-title">Jewellery Vault & Executive Dashboard</h1>
-        <p class="page-subtitle">Welcome back, {{ Auth::user()->name }}. Real-time bullion metrics and jewellery operations overview.</p>
+        <p class="page-subtitle">Welcome back, {{ Auth::user()->name }}. Jewellery operations overview.</p>
     </div>
     <div>
         <a href="{{ route('admin.products.index') }}" class="btn-gold">
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<!-- Daily Metal & Bullion Rate Board -->
+{{-- Live rate board intentionally removed.
 <div style="margin-bottom: 1.75rem;">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
         <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -56,6 +56,8 @@
         @endforeach
     </div>
 </div>
+
+--}}
 
 <!-- Key Performance Stat Cards Grid -->
 <div class="stats-grid">

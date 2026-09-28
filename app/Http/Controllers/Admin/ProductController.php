@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JewelryCategory;
 use App\Models\JewelryProduct;
-use App\Services\LiveMetalRateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,10 +16,8 @@ class ProductController extends Controller
     /**
      * Display a listing of jewelry items with filters.
      */
-    public function index(Request $request, LiveMetalRateService $liveMetalRates): View
+    public function index(Request $request): View
     {
-        $this->syncExistingProductCategories();
-
         $query = JewelryProduct::query();
 
         if ($request->filled('search')) {
@@ -45,11 +42,10 @@ class ProductController extends Controller
         }
 
         $products = $query->latest()->paginate(10)->withQueryString();
-        $rates = $liveMetalRates->currentRates();
         $categories = JewelryCategory::query()->orderBy('name')->pluck('name');
         $metalTypes = ['Gold', 'Diamond', 'Silver', 'Platinum', 'Polki & Kundan'];
 
-        return view('admin.products.index', compact('products', 'rates', 'categories', 'metalTypes'));
+        return view('admin.products.index', compact('products', 'categories', 'metalTypes'));
     }
 
     /**
@@ -162,15 +158,5 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Jewellery item '.$sku.' removed from catalog.');
-    }
-
-    private function syncExistingProductCategories(): void
-    {
-        JewelryProduct::query()
-            ->whereNotNull('category')
-            ->where('category', '!=', '')
-            ->distinct()
-            ->pluck('category')
-            ->each(fn (string $name) => JewelryCategory::firstOrCreate(['name' => $name], ['slug' => Str::slug($name)]));
     }
 }

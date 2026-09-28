@@ -76,7 +76,7 @@
     </div>
 </section>
 
-<!-- Live Bullion Rate Board -->
+{{-- Live rates intentionally removed from the customer experience.
 <div class="container-luxury">
     <div class="bullion-widget-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
@@ -117,6 +117,8 @@
     </div>
 </div>
 
+--}}
+
 <!-- Curated Categories Section -->
 <section class="section-luxury">
     <div class="container-luxury">
@@ -130,21 +132,23 @@
         </div>
 
         <div class="category-cards-grid">
-            @foreach($defaultCategories as $catName => $catImg)
-                <a href="{{ route('catalogue.index', ['category' => $catName]) }}" class="category-card">
-                    <img src="{{ $catImg }}" alt="{{ $catName }}" class="category-card-img" loading="lazy">
+            @forelse($topCategories as $category)
+                <a href="{{ route('catalogue.index', ['category' => $category->name]) }}" class="category-card">
+                    <img src="{{ $category->latestProduct?->display_image_url }}" alt="{{ $category->name }}" class="category-card-img" loading="lazy">
                     <div class="category-card-overlay">
                         <span class="category-card-count">
-                            {{ $categoryCounts[$catName] ?? 0 }} {{ Str::plural('Piece', $categoryCounts[$catName] ?? 0) }} in Vault
+                            {{ $category->products_count }} {{ Str::plural('Piece', $category->products_count) }} in Vault
                         </span>
-                        <h3 class="category-card-name">{{ $catName }}</h3>
+                        <h3 class="category-card-name">{{ $category->name }}</h3>
                         <span class="category-card-link-text">
                             View Collection
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
                     </div>
                 </a>
-            @endforeach
+            @empty
+                <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">Categories will appear here after products are added.</p>
+            @endforelse
         </div>
     </div>
 </section>

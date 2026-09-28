@@ -132,7 +132,7 @@
                     </svg>
                 </button>
 
-                <!-- Live Bullion Rate Ticker -->
+                {{-- Live rate ticker intentionally removed.
                 @php
                     $headerRates = app(\App\Services\LiveMetalRateService::class)->currentRates();
                     $gold24 = $headerRates->firstWhere('metal_code', 'gold_24k');
@@ -164,6 +164,7 @@
                     </div>
                     @endif
                 </div>
+                --}}
             </div>
 
             <!-- Header Right Section -->

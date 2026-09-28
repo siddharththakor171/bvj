@@ -17,7 +17,6 @@ Route::get('/jewellery/{product:sku}', [CatalogueController::class, 'show'])->na
 Route::get('/collections', [CatalogueController::class, 'collections'])->name('collections');
 Route::get('/about', [CatalogueController::class, 'about'])->name('about');
 Route::get('/contact', [CatalogueController::class, 'contact'])->name('contact');
-Route::get('/live-rates', [CatalogueController::class, 'liveRates'])->name('live-rates');
 Route::post('/inquiry', [CatalogueController::class, 'storeInquiry'])->name('catalogue.inquiry');
 
 // Authentication Routes

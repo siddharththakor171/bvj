@@ -16,8 +16,6 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $this->syncExistingProductCategories();
-
         $categories = JewelryCategory::query()->withCount('products')->orderBy('name')->get();
 
         return view('admin.categories.index', compact('categories'));
@@ -60,15 +58,5 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
-    }
-
-    private function syncExistingProductCategories(): void
-    {
-        JewelryProduct::query()
-            ->whereNotNull('category')
-            ->where('category', '!=', '')
-            ->distinct()
-            ->pluck('category')
-            ->each(fn (string $name) => JewelryCategory::firstOrCreate(['name' => $name], ['slug' => Str::slug($name)]));
     }
 }
